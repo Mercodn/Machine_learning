@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción de Abandono de Cliente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>📊 Predicción de Abandono de Cliente</h1>
+
+    <form action="/prediccion_abandono" method="POST">
+        <label for="historial">Historial de compras:</label>
+        <input type="number" name="historial" required>
+
+        <label for="frecuencia">Frecuencia de compra (días):</label>
+        <input type="number" name="frecuencia" required>
+
+        <label for="gasto">Gasto promedio ($):</label>
+        <input type="number" step="0.01" name="gasto" required>
+
+        <button type="submit">Predecir</button>
+    </form>
+
+    {% if resultado %}
+        <h3>Resultado: {{ resultado }}</h3>
+    {% endif %}
+
+    <a href="/">🔙 Volver al inicio</a>
+</body>
+</html>

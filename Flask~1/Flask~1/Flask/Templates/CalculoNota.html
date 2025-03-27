@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regresión Lineal - Predicción de Nota</title>
+</head>
+<body>
+    <h2>Predicción de Nota según Horas de Estudio</h2>
+
+    <form action="/CalculoNota" method="POST">
+        <label for="horas">Horas de estudio:</label>
+        <input type="number" name="horas" step="0.1" required>
+        <button type="submit">Predecir Nota</button>
+    </form>
+
+    {% if nota_predicha is not none %}
+        <h3>La nota predicha es: {{ nota_predicha }}</h3>
+    {% endif %}
+</body>
+</html>

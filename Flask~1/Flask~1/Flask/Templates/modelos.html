@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Modelos de Machine Learning</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Modelos de Machine Learning</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nombre del Modelo</th>
+            <th>ID Tipo ML</th>
+        </tr>
+        {% for modelo in modelos %}
+        <tr>
+            <td>{{ modelo.id_modelo_ml }}</td>
+            <td>{{ modelo.nombre_modelo }}</td>
+            <td>{{ modelo.id_tipo_ml }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
