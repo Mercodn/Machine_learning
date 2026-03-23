@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Regression Visualization{% endblock %}
+
+{% block content %}
+<h1>Regression Visualization</h1>
+<div class="card">
+    <div class="card-body">
+        <img src="{{ url_for('static', filename='regression_plot.png') }}" alt="Regression Plot" class="img-fluid">
+        <h6 class="mt-3">Interpretation of Results</h6>
+        <p>The scatter plot shows actual vs predicted insurance charges. The red dashed line represents perfect predictions. Points closer to this line indicate better model performance. The model shows reasonable predictive capability for insurance charge estimation.</p>
+    </div>
+</div>
+<a href="/linear_regression_app" class="btn btn-secondary mt-3">Back to Application Overview</a>
+{% endblock %}

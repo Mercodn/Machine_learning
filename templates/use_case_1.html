@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Use Case 1: Cancer Detection{% endblock %}
+
+{% block content %}
+<h1>Use Case 1: AI-Powered Cancer Screening</h1>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Title</h5>
+        <p>AI-Powered Cancer Screening and Detection</p>
+        
+        <h5 class="card-title">Problem Description</h5>
+        <p>Cancer detection often requires expert radiologists to analyze medical images. AI can assist in identifying potential tumors and abnormalities more quickly and accurately, especially in screening programs where workload is high.</p>
+        
+        <h5 class="card-title">Type of Machine Learning</h5>
+        <p>Supervised Learning - Classification (with Computer Vision)</p>
+        
+        <h5 class="card-title">Input Data</h5>
+        <ul>
+            <li>Medical images (X-rays, MRIs, CT scans)</li>
+            <li>Patient demographics (age, gender)</li>
+            <li>Historical medical data</li>
+        </ul>
+        
+        <h5 class="card-title">Expected Output</h5>
+        <p>Classification: Benign or Malignant (binary classification), with confidence scores</p>
+        
+        <h5 class="card-title">Real-world Relevance</h5>
+        <p>This technology can significantly reduce false negatives in cancer screening, enable earlier detection, and help overburdened healthcare systems process more cases efficiently, ultimately saving lives through timely intervention.</p>
+    </div>
+</div>
+{% endblock %}

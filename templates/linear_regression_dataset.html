@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Dataset Explanation{% endblock %}
+
+{% block content %}
+<h1>Dataset Explanation</h1>
+<div class="card">
+    <div class="card-body">
+        <p>The dataset contains 1,338 records of insurance charges with the following features:</p>
+        <ul>
+            <li><strong>Age:</strong> Age of the primary beneficiary (18-64 years)</li>
+            <li><strong>Sex:</strong> Gender of the beneficiary (male/female)</li>
+            <li><strong>BMI:</strong> Body mass index (15.96-53.13)</li>
+            <li><strong>Children:</strong> Number of children covered by insurance (0-5)</li>
+            <li><strong>Smoker:</strong> Smoking status (yes/no)</li>
+            <li><strong>Region:</strong> Residential area (northeast, northwest, southeast, southwest)</li>
+            <li><strong>Charges:</strong> Individual medical costs billed by insurance (target variable)</li>
+        </ul>
+    </div>
+</div>
+<a href="/linear_regression_app" class="btn btn-secondary mt-3">Back to Application Overview</a>
+{% endblock %}

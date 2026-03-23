@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Data Preparation{% endblock %}
+
+{% block content %}
+<h1>Data Preparation</h1>
+<div class="card">
+    <div class="card-body">
+        <ul>
+            <li>Categorical variables (sex, smoker, region) were encoded using Label Encoding</li>
+            <li>Data was split into training (80%) and testing (20%) sets</li>
+            <li>Linear regression model was trained on the training data</li>
+        </ul>
+    </div>
+</div>
+<a href="/linear_regression_app" class="btn btn-secondary mt-3">Back to Application Overview</a>
+{% endblock %}

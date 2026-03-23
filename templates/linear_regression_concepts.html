@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Linear Regression Concepts{% endblock %}
+
+{% block content %}
+<h1>Linear Regression - Basic Concepts</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>What is Linear Regression?</h5>
+    </div>
+    <div class="card-body">
+        <p>Linear regression is a supervised machine learning algorithm used to predict a continuous target variable based on one or more predictor variables. It assumes a linear relationship between the input variables (X) and the output variable (Y).</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Independent and Dependent Variables</h5>
+    </div>
+    <div class="card-body">
+        <ul>
+            <li><strong>Independent Variables (Features):</strong> The input variables used to make predictions (e.g., age, BMI, smoking status)</li>
+            <li><strong>Dependent Variable (Target):</strong> The output variable we want to predict (e.g., insurance charges)</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Training Data</h5>
+    </div>
+    <div class="card-body">
+        <p>Training data consists of historical observations where we know both the input features and the corresponding target values. The algorithm learns the relationship between inputs and outputs from this data.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Regression Line</h5>
+    </div>
+    <div class="card-body">
+        <p>The regression line is represented by the equation: Y = mX + b</p>
+        <ul>
+            <li>Y: Predicted value</li>
+            <li>X: Input feature</li>
+            <li>m: Slope (coefficient)</li>
+            <li>b: Intercept (constant)</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Slope and Intercept</h5>
+    </div>
+    <div class="card-body">
+        <ul>
+            <li><strong>Slope (m):</strong> Indicates how much Y changes for a unit change in X</li>
+            <li><strong>Intercept (b):</strong> The value of Y when X is zero</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Example of Application</h5>
+    </div>
+    <div class="card-body">
+        <p>In our insurance dataset, we can predict charges based on age. For example, the model might learn that insurance charges increase by $200 for each additional year of age, with a base charge of $5,000 for a newborn.</p>
+    </div>
+</div>
+{% endblock %}
