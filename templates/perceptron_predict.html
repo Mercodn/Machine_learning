@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Perceptron Prediction{% endblock %}
+
+{% block content %}
+<h1>Perceptron - Iris Classification Prediction</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Predict Iris Species</h5>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            <div class="mb-3">
+                <label for="sepal_length" class="form-label">Sepal Length (cm)</label>
+                <input type="number" step="0.1" class="form-control" id="sepal_length" name="sepal_length" required>
+            </div>
+            <div class="mb-3">
+                <label for="sepal_width" class="form-label">Sepal Width (cm)</label>
+                <input type="number" step="0.1" class="form-control" id="sepal_width" name="sepal_width" required>
+            </div>
+            <div class="mb-3">
+                <label for="petal_length" class="form-label">Petal Length (cm)</label>
+                <input type="number" step="0.1" class="form-control" id="petal_length" name="petal_length" required>
+            </div>
+            <div class="mb-3">
+                <label for="petal_width" class="form-label">Petal Width (cm)</label>
+                <input type="number" step="0.1" class="form-control" id="petal_width" name="petal_width" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Predict</button>
+        </form>
+    </div>
+</div>
+
+{% if prediction %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Prediction Result</h5>
+    </div>
+    <div class="card-body">
+        <h4 class="text-primary">{{ prediction }}</h4>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

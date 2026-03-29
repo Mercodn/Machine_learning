@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Logistic Regression Dataset{% endblock %}
+
+{% block content %}
+<h1>Logistic Regression - Dataset Explanation</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>What the Dataset Represents</h5>
+    </div>
+    <div class="card-body">
+        <p>This dataset contains features extracted from emails to classify them as spam or not spam. It simulates a spam detection system where various characteristics of emails are used to determine if they are unwanted messages.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Number of Records</h5>
+    </div>
+    <div class="card-body">
+        <p>The dataset contains 20 records, with 16 used for training and 4 for testing.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Features</h5>
+    </div>
+    <div class="card-body">
+        <ul>
+            <li><strong>length:</strong> The total length of the email in characters</li>
+            <li><strong>num_exclamation:</strong> Number of exclamation marks in the email</li>
+            <li><strong>num_dollar:</strong> Number of dollar signs in the email</li>
+            <li><strong>num_uppercase:</strong> Number of uppercase letters in the email</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Target Classes</h5>
+    </div>
+    <div class="card-body">
+        <ul>
+            <li><strong>0:</strong> Not Spam (legitimate email)</li>
+            <li><strong>1:</strong> Spam (unwanted email)</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Why Suitable for Logistic Regression</h5>
+    </div>
+    <div class="card-body">
+        <p>This dataset is suitable for logistic regression because it involves binary classification (spam vs not spam) and the features provide numerical indicators that can help distinguish between the two classes. Logistic regression is effective for this type of problem where we need to estimate probabilities of class membership.</p>
+    </div>
+</div>
+{% endblock %}

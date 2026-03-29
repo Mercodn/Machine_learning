@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Perceptron Variables{% endblock %}
+
+{% block content %}
+<h1>Perceptron - Variables Used</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Input Variables (Features)</h5>
+    </div>
+    <div class="card-body">
+        <p>The model uses physical measurements of iris flowers:</p>
+        <ul>
+            <li><strong>Sepal Length:</strong> Length of the sepal in centimeters</li>
+            <li><strong>Sepal Width:</strong> Width of the sepal in centimeters</li>
+            <li><strong>Petal Length:</strong> Length of the petal in centimeters</li>
+            <li><strong>Petal Width:</strong> Width of the petal in centimeters</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Target Variable</h5>
+    </div>
+    <div class="card-body">
+        <p><strong>Iris Species:</strong> Binary classification between Setosa (0) and Versicolor (1)</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Variable Types</h5>
+    </div>
+    <div class="card-body">
+        <ul>
+            <li><strong>Numerical Features:</strong> All measurements are continuous numerical values</li>
+            <li><strong>Categorical Target:</strong> Binary classification target</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

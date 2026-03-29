@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Logistic Regression Prediction{% endblock %}
+
+{% block content %}
+<h1>Logistic Regression - Spam Classification Prediction</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Predict Spam Classification</h5>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            <div class="mb-3">
+                <label for="length" class="form-label">Email Length</label>
+                <input type="number" class="form-control" id="length" name="length" required>
+            </div>
+            <div class="mb-3">
+                <label for="num_exclamation" class="form-label">Number of Exclamation Marks</label>
+                <input type="number" class="form-control" id="num_exclamation" name="num_exclamation" required>
+            </div>
+            <div class="mb-3">
+                <label for="num_dollar" class="form-label">Number of Dollar Signs</label>
+                <input type="number" class="form-control" id="num_dollar" name="num_dollar" required>
+            </div>
+            <div class="mb-3">
+                <label for="num_uppercase" class="form-label">Number of Uppercase Letters</label>
+                <input type="number" class="form-control" id="num_uppercase" name="num_uppercase" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Predict</button>
+        </form>
+    </div>
+</div>
+
+{% if prediction %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Prediction Result</h5>
+    </div>
+    <div class="card-body">
+        <h4 class="text-{{ 'danger' if prediction == 'Spam' else 'success' }}">{{ prediction }}</h4>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

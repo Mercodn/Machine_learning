@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Perceptron Dataset{% endblock %}
+
+{% block content %}
+<h1>Perceptron - Dataset Explanation</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>What the Dataset Represents</h5>
+    </div>
+    <div class="card-body">
+        <p>The Iris dataset contains measurements of iris flowers collected by Ronald Fisher in 1936. It includes three species of iris flowers, but for this binary classification task, we focus on distinguishing between Setosa and Versicolor species.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Number of Records</h5>
+    </div>
+    <div class="card-body">
+        <p>The dataset contains 100 records for the two selected species (50 Setosa and 50 Versicolor), with 80 used for training and 20 for testing.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Features</h5>
+    </div>
+    <div class="card-body">
+        <ul>
+            <li><strong>Sepal Length:</strong> Length of the sepal in centimeters</li>
+            <li><strong>Sepal Width:</strong> Width of the sepal in centimeters</li>
+            <li><strong>Petal Length:</strong> Length of the petal in centimeters</li>
+            <li><strong>Petal Width:</strong> Width of the petal in centimeters</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Target Classes</h5>
+    </div>
+    <div class="card-body">
+        <ul>
+            <li><strong>0:</strong> Setosa</li>
+            <li><strong>1:</strong> Versicolor</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Why Suitable for Perceptron</h5>
+    </div>
+    <div class="card-body">
+        <p>The Iris dataset is suitable for the Perceptron because Setosa and Versicolor species are linearly separable based on their measurements. The Perceptron can learn a linear decision boundary to distinguish between these two classes effectively.</p>
+    </div>
+</div>
+{% endblock %}

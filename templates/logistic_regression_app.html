@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Logistic Regression Application{% endblock %}
+
+{% block content %}
+<h1>Logistic Regression - Application: Spam Email Classification</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Problem Description</h5>
+    </div>
+    <div class="card-body">
+        <p>Classifying emails as spam or not spam based on various features extracted from the email content. This helps in filtering unwanted emails and improving email user experience.</p>
+    </div>
+</div>
+
+<p>Explore the different aspects of the logistic regression application:</p>
+<div class="list-group">
+    <a href="/logistic_regression_dataset" class="list-group-item list-group-item-action">Dataset Explanation</a>
+    <a href="/logistic_regression_variables" class="list-group-item list-group-item-action">Variables Used</a>
+    <a href="/logistic_regression_prep" class="list-group-item list-group-item-action">Data Preparation</a>
+    <a href="/logistic_regression_viz" class="list-group-item list-group-item-action">Model Evaluation</a>
+    <a href="/logistic_regression_predict" class="list-group-item list-group-item-action">Prediction Form</a>
+</div>
+{% endblock %}

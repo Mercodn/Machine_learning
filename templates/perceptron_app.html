@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Perceptron Application{% endblock %}
+
+{% block content %}
+<h1>Perceptron - Application: Iris Flower Classification</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Problem Description</h5>
+    </div>
+    <div class="card-body">
+        <p>Classifying iris flowers into two species (Setosa and Versicolor) based on their physical measurements. This demonstrates the Perceptron's ability to learn linear decision boundaries for classification tasks.</p>
+    </div>
+</div>
+
+<p>Explore the different aspects of the Perceptron application:</p>
+<div class="list-group">
+    <a href="/perceptron_dataset" class="list-group-item list-group-item-action">Dataset Explanation</a>
+    <a href="/perceptron_variables" class="list-group-item list-group-item-action">Variables Used</a>
+    <a href="/perceptron_prep" class="list-group-item list-group-item-action">Data Preparation</a>
+    <a href="/perceptron_viz" class="list-group-item list-group-item-action">Model Evaluation</a>
+    <a href="/perceptron_predict" class="list-group-item list-group-item-action">Prediction Form</a>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Logistic Regression Data Preparation{% endblock %}
+
+{% block content %}
+<h1>Logistic Regression - Data Preparation</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Data Loading</h5>
+    </div>
+    <div class="card-body">
+        <p>The dataset is loaded from a CSV file containing email features and spam labels.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Feature Selection</h5>
+    </div>
+    <div class="card-body">
+        <p>All four features (length, num_exclamation, num_dollar, num_uppercase) are selected as input variables, and the 'label' column is used as the target variable.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Train-Test Split</h5>
+    </div>
+    <div class="card-body">
+        <p>The data is split into training (80%) and testing (20%) sets using stratified sampling to maintain class distribution.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Model Training</h5>
+    </div>
+    <div class="card-body">
+        <p>A Logistic Regression model is trained on the training data to learn the relationship between email features and spam classification.</p>
+    </div>
+</div>
+{% endblock %}

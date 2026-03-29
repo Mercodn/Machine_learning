@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Perceptron Data Preparation{% endblock %}
+
+{% block content %}
+<h1>Perceptron - Data Preparation</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Data Loading</h5>
+    </div>
+    <div class="card-body">
+        <p>The Iris dataset is loaded from scikit-learn's datasets module.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Class Selection</h5>
+    </div>
+    <div class="card-body">
+        <p>Only Setosa (class 0) and Versicolor (class 1) are selected for binary classification, as these classes are linearly separable.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Feature Selection</h5>
+    </div>
+    <div class="card-body">
+        <p>All four features (sepal length, sepal width, petal length, petal width) are used as input variables.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Train-Test Split</h5>
+    </div>
+    <div class="card-body">
+        <p>The data is split into training (80%) and testing (20%) sets to evaluate model performance.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Model Training</h5>
+    </div>
+    <div class="card-body">
+        <p>A Perceptron model is trained on the training data to learn the linear decision boundary between the two iris species.</p>
+    </div>
+</div>
+{% endblock %}

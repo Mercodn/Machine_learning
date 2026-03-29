@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Logistic Regression Evaluation{% endblock %}
+
+{% block content %}
+<h1>Logistic Regression - Model Evaluation</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Confusion Matrix</h5>
+    </div>
+    <div class="card-body">
+        <img src="{{ url_for('static', filename='logistic_confusion_matrix.png') }}" alt="Confusion Matrix" class="img-fluid">
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>ROC Curve</h5>
+    </div>
+    <div class="card-body">
+        <img src="{{ url_for('static', filename='logistic_roc_curve.png') }}" alt="ROC Curve" class="img-fluid">
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Evaluation Metrics</h5>
+    </div>
+    <div class="card-body">
+        <p>The model performance is evaluated using standard classification metrics calculated on the test set.</p>
+        <ul>
+            <li><strong>Accuracy:</strong> Overall correctness of predictions</li>
+            <li><strong>Precision:</strong> Proportion of positive predictions that are actually positive</li>
+            <li><strong>Recall:</strong> Proportion of actual positives that are correctly identified</li>
+            <li><strong>F1-Score:</strong> Harmonic mean of precision and recall</li>
+            <li><strong>AUC:</strong> Area under the ROC curve, measuring model's ability to distinguish classes</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Interpretation of Results</h5>
+    </div>
+    <div class="card-body">
+        <p>The confusion matrix shows the number of true positives, true negatives, false positives, and false negatives. The ROC curve illustrates the trade-off between true positive rate and false positive rate at different classification thresholds.</p>
+    </div>
+</div>
+{% endblock %}

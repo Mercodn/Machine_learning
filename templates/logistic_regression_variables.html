@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Logistic Regression Variables{% endblock %}
+
+{% block content %}
+<h1>Logistic Regression - Variables Used</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Input Variables (Features)</h5>
+    </div>
+    <div class="card-body">
+        <p>The model uses the following features extracted from emails:</p>
+        <ul>
+            <li><strong>Email Length:</strong> Total number of characters in the email body</li>
+            <li><strong>Number of Exclamation Marks:</strong> Count of '!' characters</li>
+            <li><strong>Number of Dollar Signs:</strong> Count of '$' characters</li>
+            <li><strong>Number of Uppercase Letters:</strong> Count of uppercase letters</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Target Variable</h5>
+    </div>
+    <div class="card-body">
+        <p><strong>Spam Classification:</strong> Binary variable indicating whether the email is spam (1) or not spam (0)</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Variable Types</h5>
+    </div>
+    <div class="card-body">
+        <ul>
+            <li><strong>Numerical Features:</strong> All input variables are numerical counts</li>
+            <li><strong>Categorical Target:</strong> Binary classification target</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

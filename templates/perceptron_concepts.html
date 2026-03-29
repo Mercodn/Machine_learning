@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Perceptron Concepts{% endblock %}
+
+{% block content %}
+<h1>Perceptron - Basic Concepts</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>What is the Perceptron?</h5>
+    </div>
+    <div class="card-body">
+        <p>The Perceptron is one of the earliest and simplest types of artificial neural networks. It is a supervised learning algorithm used for binary classification. The Perceptron learns to classify input data into one of two categories by finding a linear decision boundary.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>How it Works</h5>
+    </div>
+    <div class="card-body">
+        <p>The Perceptron algorithm works by iteratively updating weights to minimize classification errors. It takes input features, multiplies them by learned weights, sums them up, and applies a step function to produce a binary output.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Main Characteristics</h5>
+    </div>
+    <div class="card-body">
+        <ul>
+            <li><strong>Linear Classifier:</strong> Creates a linear decision boundary</li>
+            <li><strong>Binary Classification:</strong> Designed for two-class problems</li>
+            <li><strong>Online Learning:</strong> Can learn incrementally from data</li>
+            <li><strong>Simple Architecture:</strong> Single layer neural network</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Advantages</h5>
+    </div>
+    <div class="card-body">
+        <ul>
+            <li>Simple and easy to implement</li>
+            <li>Computationally efficient</li>
+            <li>Works well for linearly separable data</li>
+            <li>Foundation for more complex neural networks</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Limitations</h5>
+    </div>
+    <div class="card-body">
+        <ul>
+            <li>Only works for linearly separable data</li>
+            <li>Cannot handle non-linear problems</li>
+            <li>Sensitive to feature scaling</li>
+            <li>May not converge for inseparable data</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Type of Classification Problems</h5>
+    </div>
+    <div class="card-body">
+        <p>The Perceptron is suitable for binary classification problems where the classes can be separated by a linear hyperplane. It works well for problems like iris flower classification (setosa vs versicolor) where the data is linearly separable.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Real-world Use Example</h5>
+    </div>
+    <div class="card-body">
+        <p>Classifying iris flowers into species based on sepal and petal measurements. The Perceptron can learn to distinguish between different flower types using their physical characteristics.</p>
+    </div>
+</div>
+{% endblock %}

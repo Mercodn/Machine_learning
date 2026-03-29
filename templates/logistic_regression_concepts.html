@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Logistic Regression Concepts{% endblock %}
+
+{% block content %}
+<h1>Logistic Regression - Basic Concepts</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>What is Logistic Regression?</h5>
+    </div>
+    <div class="card-body">
+        <p>Logistic regression is a supervised machine learning algorithm used for binary classification problems. It predicts the probability of an instance belonging to a particular class. Unlike linear regression which predicts continuous values, logistic regression predicts discrete classes.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Difference between Regression and Classification</h5>
+    </div>
+    <div class="card-body">
+        <ul>
+            <li><strong>Regression:</strong> Predicts continuous numerical values (e.g., price, temperature)</li>
+            <li><strong>Classification:</strong> Predicts discrete categories or classes (e.g., spam/not spam, yes/no)</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Binary Classification</h5>
+    </div>
+    <div class="card-body">
+        <p>Binary classification involves categorizing instances into one of two classes. Logistic regression is commonly used for this type of problem.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Target Variable / Class Label</h5>
+    </div>
+    <div class="card-body">
+        <p>The target variable in classification is categorical. For binary classification, it's typically represented as 0 or 1, where 0 might represent "not spam" and 1 represents "spam".</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Features / Predictors</h5>
+    </div>
+    <div class="card-body">
+        <p>Features are the input variables used to make predictions. In our spam classification example, features might include email length, number of exclamation marks, etc.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Probability Estimation</h5>
+    </div>
+    <div class="card-body">
+        <p>Logistic regression estimates the probability that an instance belongs to the positive class (usually class 1). The output is a value between 0 and 1.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Decision Boundary</h5>
+    </div>
+    <div class="card-body">
+        <p>The decision boundary is a threshold that separates the classes. If the predicted probability is above the threshold, the instance is classified as the positive class.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Classification Threshold</h5>
+    </div>
+    <div class="card-body">
+        <p>The classification threshold is typically set to 0.5. However, it can be adjusted based on the problem requirements to favor precision or recall.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Real-world Use Example</h5>
+    </div>
+    <div class="card-body">
+        <p>Spam email detection: Based on email characteristics (length, special characters, etc.), predict whether an email is spam or legitimate.</p>
+    </div>
+</div>
+{% endblock %}
