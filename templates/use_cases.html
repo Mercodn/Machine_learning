@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Machine Learning Use Cases{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>📊 Machine Learning Use Cases</h1>
+    <p>Explore four real-world applications of Machine Learning across different domains</p>
+</div>
+
+<div class="card-grid">
+    {% for case in use_cases %}
+    <div class="card">
+        <h3>{{ case.title }}</h3>
+        <p>{{ case.description }}</p>
+        <p><strong>Type:</strong> {{ case.type }}</p>
+        <a href="/use-case/{{ case.id }}">View Details →</a>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="content">
+    <h2>Understanding ML Use Cases</h2>
+    <p>Machine Learning solves real-world problems across various industries:</p>
+    <ul style="list-style-position: inside; line-height: 2;">
+        <li><strong>Regression:</strong> Predicting continuous values (prices, grades, temperatures)</li>
+        <li><strong>Classification:</strong> Predicting categories (yes/no, spam/not spam, disease/healthy)</li>
+        <li><strong>Clustering:</strong> Grouping similar data points</li>
+        <li><strong>Anomaly Detection:</strong> Finding unusual patterns</li>
+    </ul>
+</div>
+{% endblock %}

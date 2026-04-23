@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Linear Regression - Basic Concepts{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>📊 Linear Regression - Basic Concepts</h1>
+    <p>Understanding the fundamentals of linear regression</p>
+</div>
+
+<div class="content">
+    <h2>What is Linear Regression?</h2>
+    <p>Linear Regression is a supervised learning algorithm that models the linear relationship between input variables (features) and a continuous output variable (target). It finds the best-fitting straight line through the data points.</p>
+    
+    <h2>The Regression Line Equation</h2>
+    <div style="background-color: #f0f7ff; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <p style="font-family: monospace; font-size: 1.1rem; color: #333;">
+            <strong>y = mx + b</strong>
+        </p>
+        <p>Or in ML notation:</p>
+        <p style="font-family: monospace; font-size: 1.1rem; color: #333;">
+            <strong>ŷ = β₀ + β₁x</strong>
+        </p>
+    </div>
+    
+    <h2>Key Components</h2>
+    
+    <div style="background-color: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Independent Variable (x)</h3>
+        <p>The input feature used to make predictions. Also called <strong>predictor</strong> or <strong>feature</strong>.</p>
+        <p><strong>Example:</strong> Study hours</p>
+    </div>
+    
+    <div style="background-color: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Dependent Variable (y)</h3>
+        <p>The output or target value we want to predict. Also called <strong>response</strong> or <strong>target</strong>.</p>
+        <p><strong>Example:</strong> Final grade</p>
+    </div>
+    
+    <div style="background-color: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Slope (β₁ or m)</h3>
+        <p>Represents the change in the dependent variable for each unit change in the independent variable.</p>
+        <p><strong>Interpretation:</strong> For every additional hour of study, the grade increases by [slope] points.</p>
+        <p><strong>Current Model:</strong> <strong>{{ parameters.slope }}</strong></p>
+    </div>
+    
+    <div style="background-color: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Intercept (β₀ or b)</h3>
+        <p>The y-value when x equals zero. Represents the predicted value with no input.</p>
+        <p><strong>Interpretation:</strong> Without any study hours, the predicted grade is [intercept].</p>
+        <p><strong>Current Model:</strong> <strong>{{ parameters.intercept }}</strong></p>
+    </div>
+    
+    <h2>Training Data</h2>
+    <p>The regression model is trained on a dataset of 20 students with their study hours and final grades.</p>
+    
+    <div style="background-color: #f9f9f9; padding: 15px; margin: 20px 0; border-radius: 8px;">
+        <p><strong>Dataset Statistics:</strong></p>
+        <div style="display: flex; flex-wrap: wrap;">
+            <div class="stat-box">
+                <strong>{{ stats.count }}</strong>
+                <span>Total Samples</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.hours_mean }}</strong>
+                <span>Average Study Hours</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.grade_mean }}</strong>
+                <span>Average Final Grade</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.correlation }}</strong>
+                <span>Correlation Coefficient</span>
+            </div>
+        </div>
+    </div>
+    
+    <h2>Model Equation</h2>
+    <div style="background-color: #e8f5e9; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #4caf50;">
+        <p style="font-family: monospace; font-size: 1.2rem; color: #333;">
+            {{ parameters.equation }}
+        </p>
+    </div>
+    
+    <h2>How Linear Regression Works</h2>
+    <ol style="line-height: 2.2;">
+        <li><strong>Collect Training Data:</strong> Gather examples with known inputs and outputs</li>
+        <li><strong>Find the Best Line:</strong> Use optimization to minimize prediction errors (residuals)</li>
+        <li><strong>Calculate Coefficients:</strong> Determine the slope and intercept values</li>
+        <li><strong>Make Predictions:</strong> Use the equation to predict new values</li>
+    </ol>
+    
+    <h2>Assumptions of Linear Regression</h2>
+    <ul style="list-style-position: inside; line-height: 2;">
+        <li>Linear relationship between variables</li>
+        <li>Independent observations</li>
+        <li>Constant variance (homoscedasticity)</li>
+        <li>Normally distributed errors</li>
+    </ul>
+    
+    <h2>Next Steps</h2>
+    <p>Ready to see the model in action? <a href="/linear-regression/application" style="color: #667eea; font-weight: 600;">Try the Interactive Prediction Tool →</a></p>
+</div>
+{% endblock %}

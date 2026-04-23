@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}Logistic Regression - Application{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>📈 Logistic Regression - Application</h1>
+    <p>Predict customer purchase behavior</p>
+</div>
+
+<div class="content">
+    <h2>Feature Importance Visualization</h2>
+    <div class="plot-container">
+        <img src="data:image/png;base64,{{ plot_url }}" alt="Partial Dependence Plot">
+    </div>
+    
+    <p style="text-align: center; color: #666; font-size: 0.95rem; margin-top: 10px;">
+        <em>This chart shows how the probability of purchase changes with website visits,<br>while other features are held at their average values.</em>
+    </p>
+    
+    <h2>Dataset Overview</h2>
+    <p>The model was trained on customer behavioral data:</p>
+    <div style="background-color: #f9f9f9; padding: 15px; margin: 20px 0; border-radius: 8px;">
+        <div style="display: flex; flex-wrap: wrap;">
+            <div class="stat-box">
+                <strong>{{ stats.total_samples }}</strong>
+                <span>Total Customers</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.purchases }}</strong>
+                <span>Made Purchase</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.no_purchases }}</strong>
+                <span>No Purchase</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.purchase_rate }}%</strong>
+                <span>Purchase Rate</span>
+            </div>
+        </div>
+    </div>
+    
+    <h2>Make a Prediction</h2>
+    <p>Enter customer information to predict purchase probability:</p>
+    
+    {% if error %}
+    <div class="alert alert-error">
+        <strong>Error:</strong> {{ error }}
+    </div>
+    {% endif %}
+    
+    <form method="POST" action="/logistic-regression/predict">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="form-group">
+                <label for="age">Age (years):</label>
+                <input 
+                    type="number" 
+                    id="age" 
+                    name="age" 
+                    min="13" 
+                    max="150" 
+                    placeholder="Enter age"
+                    {% if result %}value="{{ request.form.get('age', '') }}"{% endif %}
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="income">Monthly Income (USD):</label>
+                <input 
+                    type="number" 
+                    id="income" 
+                    name="income" 
+                    step="100" 
+                    min="0" 
+                    placeholder="Enter income"
+                    {% if result %}value="{{ request.form.get('income', '') }}"{% endif %}
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="web_visits">Web Visits per Month:</label>
+                <input 
+                    type="number" 
+                    id="web_visits" 
+                    name="web_visits" 
+                    min="0" 
+                    max="100" 
+                    placeholder="Enter visits"
+                    {% if result %}value="{{ request.form.get('web_visits', '') }}"{% endif %}
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="time_spent">Time on Site (minutes per month):</label>
+                <input 
+                    type="number" 
+                    id="time_spent" 
+                    name="time_spent" 
+                    step="10" 
+                    min="0" 
+                    placeholder="Enter minutes"
+                    {% if result %}value="{{ request.form.get('time_spent', '') }}"{% endif %}
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="prev_purchases">Previous Purchases:</label>
+                <input 
+                    type="number" 
+                    id="prev_purchases" 
+                    name="prev_purchases" 
+                    min="0" 
+                    max="50" 
+                    placeholder="Enter number"
+                    {% if result %}value="{{ request.form.get('prev_purchases', '') }}"{% endif %}
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="discount_used">Used Discount Code:</label>
+                <select id="discount_used" name="discount_used" required>
+                    <option value="">-- Select --</option>
+                    <option value="0" {% if request.form.get('discount_used') == '0' %}selected{% endif %}>No</option>
+                    <option value="1" {% if request.form.get('discount_used') == '1' %}selected{% endif %}>Yes</option>
+                </select>
+            </div>
+        </div>
+        
+        <button type="submit" style="margin-top: 20px; width: 100%;">Predict Purchase Probability</button>
+    </form>
+    
+    {% if result is not None %}
+    <div class="result">
+        <h3>🎯 Prediction Result</h3>
+        
+        <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <p><strong>Final Prediction:</strong> <span style="font-size: 1.3rem; font-weight: bold; color: {% if result.prediction == 'Will Purchase' %}#4caf50{% else %}#f44336{% endif %};">
+                {{ result.prediction }}
+            </span></p>
+            
+            <div style="background-color: #f5f5f5; padding: 15px; border-radius: 6px; margin-top: 15px;">
+                <p><strong>Probability Breakdown:</strong></p>
+                <p style="margin: 10px 0;">
+                    <strong>Probability of No Purchase:</strong> 
+                    <span style="float: right; font-weight: bold; color: #f44336;">{{ result.probability_no_purchase }}%</span>
+                </p>
+                <div style="width: 100%; background-color: #ddd; border-radius: 4px; height: 20px; margin-bottom: 15px;">
+                    <div style="width: {{ result.probability_no_purchase }}%; background-color: #f44336; height: 100%; border-radius: 4px;"></div>
+                </div>
+                
+                <p style="margin: 10px 0;">
+                    <strong>Probability of Purchase:</strong> 
+                    <span style="float: right; font-weight: bold; color: #4caf50;">{{ result.probability_purchase }}%</span>
+                </p>
+                <div style="width: 100%; background-color: #ddd; border-radius: 4px; height: 20px;">
+                    <div style="width: {{ result.probability_purchase }}%; background-color: #4caf50; height: 100%; border-radius: 4px;"></div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 15px; color: #666; font-size: 0.9rem;">
+                <em>Based on the trained logistic regression model using historical customer data.</em>
+            </p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="content">
+    <h2>How to Interpret Results</h2>
+    
+    <h3>Probability Interpretation</h3>
+    <ul style="list-style-position: inside; line-height: 2;">
+        <li><strong>≥ 80%:</strong> Very likely to make a purchase - Target with special offers</li>
+        <li><strong>60-80%:</strong> Likely to make a purchase - Send promotional emails</li>
+        <li><strong>40-60%:</strong> Uncertain - Provide additional information about products</li>
+        <li><strong>20-40%:</strong> Unlikely to purchase - Consider different marketing approach</li>
+        <li><strong>< 20%:</strong> Very unlikely - Focus on other customer segments</li>
+    </ul>
+    
+    <h2>Business Applications</h2>
+    <ul style="list-style-position: inside; line-height: 2;">
+        <li><strong>Marketing Strategy:</strong> Allocate marketing budget based on purchase probability</li>
+        <li><strong>Customer Segmentation:</strong> Group customers by likelihood to purchase</li>
+        <li><strong>Personalization:</strong> Customize offers for high-probability customers</li>
+        <li><strong>Campaign Optimization:</strong> Target resources toward likely converters</li>
+    </ul>
+    
+    <h2>Feature Insights</h2>
+    <ul style="list-style-position: inside; line-height: 2;">
+        <li><strong>Website Visits:</strong> More visits usually indicate higher purchase intent</li>
+        <li><strong>Time on Site:</strong> Longer engagement suggests genuine interest</li>
+        <li><strong>Previous Purchases:</strong> Repeat customers are likely to purchase again</li>
+        <li><strong>Discount Usage:</strong> Shows price sensitivity and promotional responsiveness</li>
+    </ul>
+</div>
+
+<div class="content">
+    <p><a href="/logistic-regression/concepts" style="color: #667eea; font-weight: 600;">← Back to Concepts</a></p>
+</div>
+{% endblock %}

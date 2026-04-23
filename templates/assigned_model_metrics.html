@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block title %}Random Forest - Evaluation Metrics{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>🌲 Random Forest - Evaluation Metrics</h1>
+    <p>Classification model performance analysis</p>
+</div>
+
+<div class="content">
+    <h2>Confusion Matrix</h2>
+    <p>Performance breakdown showing where the model is making correct and incorrect predictions:</p>
+    
+    <div class="plot-container">
+        <img src="data:image/png;base64,{{ confusion_matrix_plot }}" alt="Confusion Matrix">
+    </div>
+    
+    <div style="background-color: #f9f9f9; padding: 15px; margin: 20px 0; border-radius: 8px;">
+        <h3>Confusion Matrix Interpretation:</h3>
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background-color: #667eea; color: white;">
+                    <th style="padding: 10px; text-align: left;">Metric</th>
+                    <th style="padding: 10px; text-align: left;">Value</th>
+                    <th style="padding: 10px; text-align: left;">Meaning</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;"><strong>True Negatives (TN)</strong></td>
+                    <td style="padding: 10px;">{{ cm_data.tn }}</td>
+                    <td style="padding: 10px;">{{ interpretation.true_negatives }}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
+                    <td style="padding: 10px;"><strong>False Positives (FP)</strong></td>
+                    <td style="padding: 10px;">{{ cm_data.fp }}</td>
+                    <td style="padding: 10px;">{{ interpretation.false_positives }}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;"><strong>False Negatives (FN)</strong></td>
+                    <td style="padding: 10px;">{{ cm_data.fn }}</td>
+                    <td style="padding: 10px;">{{ interpretation.false_negatives }}</td>
+                </tr>
+                <tr style="background-color: #f9f9f9;">
+                    <td style="padding: 10px;"><strong>True Positives (TP)</strong></td>
+                    <td style="padding: 10px;">{{ cm_data.tp }}</td>
+                    <td style="padding: 10px;">{{ interpretation.true_positives }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <h2>Classification Metrics</h2>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin: 20px 0;">
+        <div class="stat-box" style="border-left-color: #4caf50;">
+            <strong style="color: #4caf50;">{{ metrics.accuracy_percent }}%</strong>
+            <span>Accuracy</span>
+        </div>
+        <div class="stat-box" style="border-left-color: #2196f3;">
+            <strong style="color: #2196f3;">{{ metrics.precision_percent }}%</strong>
+            <span>Precision</span>
+        </div>
+        <div class="stat-box" style="border-left-color: #ff9800;">
+            <strong style="color: #ff9800;">{{ metrics.recall_percent }}%</strong>
+            <span>Recall</span>
+        </div>
+        <div class="stat-box" style="border-left-color: #9c27b0;">
+            <strong style="color: #9c27b0;">{{ metrics.f1_percent }}%</strong>
+            <span>F1-Score</span>
+        </div>
+        <div class="stat-box" style="border-left-color: #f44336;">
+            <strong style="color: #f44336;">{{ metrics.auc_percent }}%</strong>
+            <span>AUC</span>
+        </div>
+    </div>
+    
+    <h2>Detailed Metrics Explanation</h2>
+    
+    <div style="background-color: #f0f7ff; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Accuracy: {{ metrics.accuracy_percent }}%</h3>
+        <p><strong>Formula:</strong> (TP + TN) / (TP + TN + FP + FN)</p>
+        <p>{{ interpretation.accuracy }}</p>
+        <p><strong>Interpretation:</strong> The Random Forest model correctly predicts customer satisfaction {{ metrics.accuracy_percent }}% of the time.</p>
+    </div>
+    
+    <div style="background-color: #f0f7ff; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #2196f3;">
+        <h3 style="color: #2196f3; margin-top: 0;">Precision: {{ metrics.precision_percent }}%</h3>
+        <p><strong>Formula:</strong> TP / (TP + FP)</p>
+        <p>{{ interpretation.precision }}</p>
+        <p><strong>Interpretation:</strong> When the model predicts a customer is satisfied, it is correct {{ metrics.precision_percent }}% of the time. Important for avoiding wasting resources on false satisfied predictions.</p>
+    </div>
+    
+    <div style="background-color: #f0f7ff; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #ff9800;">
+        <h3 style="color: #ff9800; margin-top: 0;">Recall (Sensitivity): {{ metrics.recall_percent }}%</h3>
+        <p><strong>Formula:</strong> TP / (TP + FN)</p>
+        <p>{{ interpretation.recall }}</p>
+        <p><strong>Interpretation:</strong> Of all actually satisfied customers, the model identifies {{ metrics.recall_percent }}%. Important for ensuring we don't miss satisfied customers.</p>
+    </div>
+    
+    <div style="background-color: #f0f7ff; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #9c27b0;">
+        <h3 style="color: #9c27b0; margin-top: 0;">F1-Score: {{ metrics.f1_percent }}%</h3>
+        <p><strong>Formula:</strong> 2 × (Precision × Recall) / (Precision + Recall)</p>
+        <p>{{ interpretation.f1_score }}</p>
+        <p><strong>Interpretation:</strong> Balanced metric combining precision and recall. Score of {{ metrics.f1_percent }}% shows strong overall performance.</p>
+    </div>
+    
+    <h2>ROC Curve and AUC</h2>
+    <p>The ROC curve illustrates the model's performance across different classification thresholds:</p>
+    
+    <div class="plot-container">
+        <img src="data:image/png;base64,{{ roc_curve_plot }}" alt="ROC Curve">
+    </div>
+    
+    <div style="background-color: #f0f7ff; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #f44336;">
+        <h3 style="color: #f44336; margin-top: 0;">AUC (Area Under Curve): {{ metrics.auc_percent }}%</h3>
+        <p>{{ interpretation.auc }}</p>
+        <ul style="list-style-position: inside; line-height: 2;">
+            <li><strong>AUC = 1.0:</strong> Perfect classifier - distinguishes all classes perfectly</li>
+            <li><strong>AUC = 0.5:</strong> Random classifier - no better than chance</li>
+            <li><strong>AUC < 0.5:</strong> Worse than random</li>
+            <li><strong>AUC = {{ metrics.auc }}:</strong> Random Forest achieves this excellent performance</li>
+        </ul>
+    </div>
+    
+    <h2>Random Forest vs Logistic Regression</h2>
+    
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <thead>
+            <tr style="background-color: #667eea; color: white;">
+                <th style="padding: 12px; text-align: left;">Metric</th>
+                <th style="padding: 12px; text-align: left;">Random Forest</th>
+                <th style="padding: 12px; text-align: left;">Logistic Regression</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Model Type</strong></td>
+                <td style="padding: 12px;">Ensemble (100 trees)</td>
+                <td style="padding: 12px;">Linear</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
+                <td style="padding: 12px;"><strong>Complexity</strong></td>
+                <td style="padding: 12px;">High</td>
+                <td style="padding: 12px;">Low</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Non-linear patterns</strong></td>
+                <td style="padding: 12px;">✓ Captures well</td>
+                <td style="padding: 12px;">✗ Limited</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
+                <td style="padding: 12px;"><strong>Interpretability</strong></td>
+                <td style="padding: 12px;">Less interpretable</td>
+                <td style="padding: 12px;">Highly interpretable</td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td style="padding: 12px;"><strong>Training speed</strong></td>
+                <td style="padding: 12px;">Slower</td>
+                <td style="padding: 12px;">Fast</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>Business Insights</h2>
+    <ul style="list-style-position: inside; line-height: 2.2;">
+        <li><strong>High Accuracy ({{ metrics.accuracy_percent }}%):</strong> Model can reliably predict satisfaction</li>
+        <li><strong>Strong Precision ({{ metrics.precision_percent }}%):</strong> Trusted for resource allocation to satisfied customers</li>
+        <li><strong>Good Recall ({{ metrics.recall_percent }}%):</strong> Effectively identifies satisfied customers</li>
+        <li><strong>Excellent AUC ({{ metrics.auc_percent }}%):</strong> Model strongly discriminates between classes</li>
+    </ul>
+</div>
+
+<div class="content">
+    <p><a href="/assigned-model/application" style="color: #667eea; font-weight: 600;">← Back to Application</a></p>
+</div>
+{% endblock %}

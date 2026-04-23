@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Supervised Learning{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>🎓 Supervised Learning</h1>
+    <p>Learning from labeled examples to make predictions</p>
+</div>
+
+<div class="content">
+    <h2>What is Supervised Learning?</h2>
+    <p>Supervised learning is a branch of Machine Learning where algorithms learn from labeled training data. Each training example consists of an input (features) and its corresponding output (label). The algorithm learns the mapping between inputs and outputs to predict labels for new, unseen data.</p>
+    
+    <h2>Key Components</h2>
+    
+    <div style="background-color: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Training Data</h3>
+        <p>A dataset with labeled examples used to train the model. Each example has features and a known target value.</p>
+    </div>
+    
+    <div style="background-color: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Features (Input Variables)</h3>
+        <p>The characteristics or attributes used to make predictions. For example, in student grading: study hours, attendance, previous GPA.</p>
+    </div>
+    
+    <div style="background-color: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Labels (Output Variables)</h3>
+        <p>The target values we want to predict. For example: final grade, pass/fail, or purchase/no purchase.</p>
+    </div>
+    
+    <div style="background-color: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Learning Algorithm</h3>
+        <p>The mathematical procedure that learns patterns from training data. Examples: Linear Regression, Logistic Regression, Decision Trees, Neural Networks.</p>
+    </div>
+    
+    <h2>Types of Supervised Learning</h2>
+    
+    <h3>1. Regression</h3>
+    <p>Predicts <strong>continuous numerical values</strong>. The output can be any real number.</p>
+    <ul style="list-style-position: inside;">
+        <li>Predict house prices</li>
+        <li>Estimate sales revenue</li>
+        <li>Forecast temperature</li>
+        <li>Predict student grades</li>
+    </ul>
+    
+    <h3>2. Classification</h3>
+    <p>Predicts <strong>discrete categories or classes</strong>. The output is one of several predefined categories.</p>
+    <ul style="list-style-position: inside;">
+        <li>Email: Spam or Not Spam (Binary)</li>
+        <li>Disease: Healthy, Disease A, Disease B (Multiclass)</li>
+        <li>Customer: Will Buy or Won't Buy (Binary)</li>
+        <li>Image: Cat, Dog, Bird (Multiclass)</li>
+    </ul>
+    
+    <h2>Supervised Learning Process</h2>
+    <ol style="line-height: 2.2;">
+        <li><strong>Data Collection:</strong> Gather labeled examples from your domain</li>
+        <li><strong>Data Preparation:</strong> Clean, normalize, and split data (training/test sets)</li>
+        <li><strong>Feature Selection:</strong> Choose relevant input variables</li>
+        <li><strong>Model Selection:</strong> Choose an appropriate algorithm</li>
+        <li><strong>Training:</strong> Fit the model to training data</li>
+        <li><strong>Evaluation:</strong> Test on unseen data to assess performance</li>
+        <li><strong>Tuning:</strong> Adjust parameters to improve performance</li>
+        <li><strong>Deployment:</strong> Use the model for predictions on new data</li>
+    </ol>
+    
+    <h2>Explore Our Examples</h2>
+    <div class="card-grid" style="margin-top: 20px;">
+        <div class="card">
+            <h3>📊 Linear Regression</h3>
+            <p>Predicting continuous values with a linear relationship between variables.</p>
+            <a href="/linear-regression/concepts">Learn Concepts →</a>
+        </div>
+        <div class="card">
+            <h3>📈 Logistic Regression</h3>
+            <p>Predicting binary outcomes using probability-based classification.</p>
+            <a href="/logistic-regression/concepts">Learn Concepts →</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}Random Forest - Application{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>🌲 Random Forest - Application</h1>
+    <p>Customer satisfaction prediction using ensemble learning</p>
+</div>
+
+<div class="content">
+    <h2>Problem Description</h2>
+    <p>A customer support department needs to predict customer satisfaction levels to:</p>
+    <ul style="list-style-position: inside; line-height: 1.8;">
+        <li>Identify at-risk customers early</li>
+        <li>Allocate resources to improve satisfaction</li>
+        <li>Understand key drivers of satisfaction</li>
+        <li>Improve overall customer experience</li>
+    </ul>
+    
+    <h2>Dataset Overview</h2>
+    <p>The model is trained on {{ stats.total_samples }} customer support records:</p>
+    
+    <div style="background-color: #f9f9f9; padding: 15px; margin: 20px 0; border-radius: 8px;">
+        <div style="display: flex; flex-wrap: wrap;">
+            <div class="stat-box">
+                <strong>{{ stats.total_samples }}</strong>
+                <span>Total Customers</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.satisfied }}</strong>
+                <span>Satisfied</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.unsatisfied }}</strong>
+                <span>Unsatisfied</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.satisfaction_rate }}%</strong>
+                <span>Satisfaction Rate</span>
+            </div>
+        </div>
+    </div>
+    
+    <h2>Input Variables (Features)</h2>
+    
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <thead>
+            <tr style="background-color: #667eea; color: white;">
+                <th style="padding: 12px; text-align: left;">Feature</th>
+                <th style="padding: 12px; text-align: left;">Type</th>
+                <th style="padding: 12px; text-align: left;">Description</th>
+                <th style="padding: 12px; text-align: left;">Range</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Response Time</strong></td>
+                <td style="padding: 12px;">Numerical</td>
+                <td style="padding: 12px;">Hours to respond to customer inquiry</td>
+                <td style="padding: 12px;">1-48 hours</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
+                <td style="padding: 12px;"><strong>Resolution Attempts</strong></td>
+                <td style="padding: 12px;">Numerical</td>
+                <td style="padding: 12px;">Number of attempts to resolve the issue</td>
+                <td style="padding: 12px;">1-10</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Previous Issues</strong></td>
+                <td style="padding: 12px;">Numerical</td>
+                <td style="padding: 12px;">Count of customer's previous issues</td>
+                <td style="padding: 12px;">0-15</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
+                <td style="padding: 12px;"><strong>Quality Score</strong></td>
+                <td style="padding: 12px;">Numerical</td>
+                <td style="padding: 12px;">Product quality rating</td>
+                <td style="padding: 12px;">1-5 stars</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Staff Rating</strong></td>
+                <td style="padding: 12px;">Numerical</td>
+                <td style="padding: 12px;">Support staff performance rating</td>
+                <td style="padding: 12px;">1-5 stars</td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td style="padding: 12px;"><strong>Issue Complexity</strong></td>
+                <td style="padding: 12px;">Numerical</td>
+                <td style="padding: 12px;">Complexity level of the issue</td>
+                <td style="padding: 12px;">1-5</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>Target Variable</h2>
+    <p><strong>Customer Satisfaction:</strong> Binary outcome (Satisfied / Unsatisfied)</p>
+    
+    <h2>Feature Importance</h2>
+    <p>This chart shows which features are most important for predicting customer satisfaction:</p>
+    
+    <div class="plot-container">
+        <img src="data:image/png;base64,{{ feature_importance_plot }}" alt="Feature Importance">
+    </div>
+    
+    <h2>Make a Prediction</h2>
+    <p>Enter customer support metrics to predict satisfaction:</p>
+    
+    {% if error %}
+    <div class="alert alert-error">
+        <strong>Error:</strong> {{ error }}
+    </div>
+    {% endif %}
+    
+    <form method="POST" action="/assigned-model/predict">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="form-group">
+                <label for="response_time">Response Time (hours):</label>
+                <input 
+                    type="number" 
+                    id="response_time" 
+                    name="response_time" 
+                    min="1" 
+                    max="48" 
+                    placeholder="1-48"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="resolution_attempts">Resolution Attempts:</label>
+                <input 
+                    type="number" 
+                    id="resolution_attempts" 
+                    name="resolution_attempts" 
+                    min="1" 
+                    max="10" 
+                    placeholder="1-10"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="previous_issues">Previous Issues Count:</label>
+                <input 
+                    type="number" 
+                    id="previous_issues" 
+                    name="previous_issues" 
+                    min="0" 
+                    max="15" 
+                    placeholder="0-15"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="quality_score">Product Quality Score (1-5):</label>
+                <input 
+                    type="number" 
+                    id="quality_score" 
+                    name="quality_score" 
+                    step="0.1" 
+                    min="1" 
+                    max="5" 
+                    placeholder="1-5"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="staff_rating">Support Staff Rating (1-5):</label>
+                <input 
+                    type="number" 
+                    id="staff_rating" 
+                    name="staff_rating" 
+                    step="0.1" 
+                    min="1" 
+                    max="5" 
+                    placeholder="1-5"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="complexity">Issue Complexity (1-5):</label>
+                <input 
+                    type="number" 
+                    id="complexity" 
+                    name="complexity" 
+                    min="1" 
+                    max="5" 
+                    placeholder="1-5"
+                    required
+                >
+            </div>
+        </div>
+        
+        <button type="submit" style="margin-top: 20px; width: 100%;">Predict Customer Satisfaction</button>
+    </form>
+    
+    {% if result %}
+    <div class="result">
+        <h3>🎯 Prediction Result</h3>
+        
+        <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <p><strong>Prediction:</strong> <span style="font-size: 1.3rem; font-weight: bold; color: {% if result.prediction == 'Satisfied' %}#4caf50{% else %}#f44336{% endif %};">
+                {{ result.prediction }}
+            </span></p>
+            
+            <p style="margin-top: 10px;">
+                <strong>Confidence Level:</strong> 
+                <span style="font-size: 1.1rem; font-weight: bold; color: #667eea;">{{ result.confidence }}%</span>
+            </p>
+            
+            <div style="background-color: #f5f5f5; padding: 15px; border-radius: 6px; margin-top: 15px;">
+                <p><strong>Probability Breakdown:</strong></p>
+                <p style="margin: 10px 0;">
+                    <strong>Unsatisfied Probability:</strong> 
+                    <span style="float: right; font-weight: bold; color: #f44336;">{{ result.probability_unsatisfied }}%</span>
+                </p>
+                <div style="width: 100%; background-color: #ddd; border-radius: 4px; height: 20px; margin-bottom: 15px;">
+                    <div style="width: {{ result.probability_unsatisfied }}%; background-color: #f44336; height: 100%; border-radius: 4px;"></div>
+                </div>
+                
+                <p style="margin: 10px 0;">
+                    <strong>Satisfied Probability:</strong> 
+                    <span style="float: right; font-weight: bold; color: #4caf50;">{{ result.probability_satisfied }}%</span>
+                </p>
+                <div style="width: 100%; background-color: #ddd; border-radius: 4px; height: 20px;">
+                    <div style="width: {{ result.probability_satisfied }}%; background-color: #4caf50; height: 100%; border-radius: 4px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="content">
+    <h2>How Random Forest Makes Predictions</h2>
+    <ol style="line-height: 2.2;">
+        <li><strong>Input Processing:</strong> Customer support metrics are provided as input</li>
+        <li><strong>Forest Decision:</strong> Each tree in the forest makes its own prediction</li>
+        <li><strong>Majority Voting:</strong> Trees "vote" on the final prediction</li>
+        <li><strong>Confidence Calculation:</strong> Confidence based on proportion of trees agreeing</li>
+        <li><strong>Probability Output:</strong> Probabilities for each class are calculated</li>
+    </ol>
+</div>
+
+<div class="content">
+    <p><a href="/assigned-model/concepts" style="color: #667eea; font-weight: 600;">← Back to Concepts</a> | 
+    <a href="/assigned-model/metrics" style="color: #667eea; font-weight: 600;">View Metrics →</a></p>
+</div>
+{% endblock %}

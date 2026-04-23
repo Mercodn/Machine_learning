@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}Unsupervised Learning - Basic Concepts{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>🔍 Unsupervised Learning - Basic Concepts</h1>
+    <p>Understanding clustering and pattern discovery without labeled data</p>
+</div>
+
+<div class="content">
+    <h2>What is Unsupervised Learning?</h2>
+    <p>Unsupervised learning is a category of machine learning algorithms that discover hidden patterns and structures in unlabeled data. Unlike supervised learning, where data points have labels or target values, unsupervised learning algorithms work with data where the output or grouping is unknown.</p>
+    
+    <div style="background-color: #f0f4ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Key Difference:</h3>
+        <p><strong>Supervised Learning:</strong> Data has labels → Predict labels for new data</p>
+        <p><strong>Unsupervised Learning:</strong> Data has no labels → Discover hidden patterns and groups</p>
+    </div>
+    
+    <h2>Applications of Unsupervised Learning</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+        <div style="background-color: #fff5e6; padding: 15px; border-radius: 8px; border-left: 4px solid #ff9800;">
+            <strong>Customer Segmentation</strong>
+            <p>Group customers by purchasing behavior, demographics, and preferences</p>
+        </div>
+        <div style="background-color: #fff5e6; padding: 15px; border-radius: 8px; border-left: 4px solid #ff9800;">
+            <strong>Image Compression</strong>
+            <p>Reduce image file size by clustering similar colors and pixels</p>
+        </div>
+        <div style="background-color: #e8f5e9; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50;">
+            <strong>Gene Sequence Analysis</strong>
+            <p>Group DNA sequences to identify similar genetic patterns</p>
+        </div>
+        <div style="background-color: #e8f5e9; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50;">
+            <strong>Document Clustering</strong>
+            <p>Organize large document collections by topic and content similarity</p>
+        </div>
+        <div style="background-color: #f3e5f5; padding: 15px; border-radius: 8px; border-left: 4px solid #9c27b0;">
+            <strong>Anomaly Detection</strong>
+            <p>Identify unusual patterns or outliers in data for fraud detection</p>
+        </div>
+        <div style="background-color: #f3e5f5; padding: 15px; border-radius: 8px; border-left: 4px solid #9c27b0;">
+            <strong>Social Network Analysis</strong>
+            <p>Discover communities and groups of users with similar interests</p>
+        </div>
+    </div>
+    
+    <h2>Clustering: The Main Unsupervised Learning Task</h2>
+    <p>Clustering is the process of grouping similar data points together into clusters. Each cluster contains data points that are more similar to each other than to points in other clusters.</p>
+    
+    <h3>Goals of Clustering:</h3>
+    <ul style="line-height: 1.8;">
+        <li><strong>Maximize Intra-cluster Similarity:</strong> Points in the same cluster should be as similar as possible</li>
+        <li><strong>Minimize Inter-cluster Similarity:</strong> Points in different clusters should be as different as possible</li>
+        <li><strong>Discover Meaningful Groups:</strong> Clusters should represent natural groupings in the data</li>
+        <li><strong>Reduce Dimensionality:</strong> Organize high-dimensional data into meaningful lower-dimensional groups</li>
+    </ul>
+    
+    <h2>K-Means Clustering Algorithm</h2>
+    <p>K-Means is one of the most popular unsupervised learning algorithms. It partitions data into K clusters by minimizing the distance between points and their cluster centroids.</p>
+    
+    <h3>What is a Centroid?</h3>
+    <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <p>A <strong>centroid</strong> is the center point of a cluster. It represents the average position of all points in that cluster. In 2D space, if a cluster contains points (x₁, y₁), (x₂, y₂), ..., (xₙ, yₙ), the centroid is at ((x₁+x₂+...+xₙ)/n, (y₁+y₂+...+yₙ)/n).</p>
+    </div>
+    
+    <h3>Distance Metrics: Euclidean Distance</h3>
+    <p>K-Means typically uses <strong>Euclidean distance</strong> to measure how far a data point is from a centroid.</p>
+    
+    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0; font-family: monospace;">
+        <p>For two points A(x₁, y₁) and B(x₂, y₂):</p>
+        <p style="font-size: 1.1em; color: #667eea;">distance = √[(x₂-x₁)² + (y₂-y₁)²]</p>
+    </div>
+    
+    <p>This formula extends to higher dimensions and is the most common distance metric in machine learning.</p>
+    
+    <h2>K-Means Algorithm: Step-by-Step Process</h2>
+    
+    <div style="margin: 20px 0;">
+        <div style="background-color: #e3f2fd; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #2196f3;">
+            <strong>Step 1: Initialize K Centroids</strong>
+            <p>Randomly select K initial centroids from the data or choose them randomly in the feature space.</p>
+        </div>
+        <div style="background-color: #e3f2fd; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #2196f3;">
+            <strong>Step 2: Assign Points to Nearest Centroid</strong>
+            <p>For each data point, calculate its distance to all K centroids and assign it to the cluster with the nearest centroid.</p>
+        </div>
+        <div style="background-color: #e3f2fd; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #2196f3;">
+            <strong>Step 3: Recalculate Centroids</strong>
+            <p>Compute the new centroid for each cluster as the mean (average) of all points currently in that cluster.</p>
+        </div>
+        <div style="background-color: #e3f2fd; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #2196f3;">
+            <strong>Step 4: Check for Convergence</strong>
+            <p>If centroids have moved significantly, repeat steps 2-3. If centroids are stable (convergence), the algorithm has finished.</p>
+        </div>
+    </div>
+    
+    <h2>Iterative Process and Convergence</h2>
+    <p>K-Means is an <strong>iterative algorithm</strong>, meaning it repeats the same steps until a stopping condition is met. Typically:</p>
+    <ul style="line-height: 1.8;">
+        <li><strong>Convergence:</strong> The algorithm stops when centroids stop moving (or move less than a threshold)</li>
+        <li><strong>Maximum Iterations:</strong> Set a maximum number of iterations to prevent infinite loops</li>
+        <li><strong>Stability:</strong> The final cluster assignments represent local optimal groupings</li>
+    </ul>
+    
+    <h2>Variance and Cluster Quality</h2>
+    <p>The quality of clustering is often measured by <strong>within-cluster variance</strong>, also called <strong>inertia</strong>:</p>
+    
+    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0; font-family: monospace;">
+        <p>Inertia = Sum of squared distances from each point to its centroid</p>
+        <p style="color: #667eea;">Lower inertia → More compact, better-defined clusters</p>
+    </div>
+    
+    <p>As K-Means iterates, variance generally decreases, indicating that clusters are becoming more cohesive and well-separated.</p>
+    
+    <h2>Choosing the Right K</h2>
+    <p>One challenge in K-Means is deciding how many clusters (K) to create. Common methods:</p>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div style="background-color: #fff3e0; padding: 15px; border-radius: 8px;">
+            <strong>Elbow Method</strong>
+            <p>Plot inertia vs. K value. The "elbow" point (where inertia decreases more slowly) suggests the optimal K.</p>
+        </div>
+        <div style="background-color: #fff3e0; padding: 15px; border-radius: 8px;">
+            <strong>Silhouette Analysis</strong>
+            <p>Measures how similar each point is to its own cluster compared to other clusters. Score ranges from -1 to 1.</p>
+        </div>
+        <div style="background-color: #fff3e0; padding: 15px; border-radius: 8px;">
+            <strong>Domain Knowledge</strong>
+            <p>Use business or domain expertise to decide meaningful K value.</p>
+        </div>
+        <div style="background-color: #fff3e0; padding: 15px; border-radius: 8px;">
+            <strong>Gap Statistic</strong>
+            <p>Compares the within-cluster variation with what would be expected for random data.</p>
+        </div>
+    </div>
+    
+    <h2>Real-World Example: Customer Segmentation</h2>
+    <p>Imagine a retail company with 1,000 customers. By applying K-Means with K=3, they might discover:</p>
+    
+    <div style="background-color: #f0f4ff; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <p><strong>Cluster 1 - Budget Shoppers:</strong> Low spending, buy few products, respond to promotions</p>
+        <p><strong>Cluster 2 - Regular Customers:</strong> Moderate spending, loyal, good product diversity</p>
+        <p><strong>Cluster 3 - Premium Clients:</strong> High spending, buy many products, value quality</p>
+    </div>
+    
+    <p>These insights enable targeted marketing strategies for each segment.</p>
+    
+    <h2>Advantages and Disadvantages</h2>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div style="background-color: #e8f5e9; padding: 15px; border-radius: 8px;">
+            <h4 style="color: #4caf50; margin-top: 0;">Advantages</h4>
+            <ul style="margin: 0; padding-left: 20px;">
+                <li>Simple and easy to understand</li>
+                <li>Fast computational time</li>
+                <li>Scales well to large datasets</li>
+                <li>Flexible with different data types</li>
+            </ul>
+        </div>
+        <div style="background-color: #ffebee; padding: 15px; border-radius: 8px;">
+            <h4 style="color: #f44336; margin-top: 0;">Disadvantages</h4>
+            <ul style="margin: 0; padding-left: 20px;">
+                <li>Must specify K in advance</li>
+                <li>Sensitive to initial centroid placement</li>
+                <li>Assumes spherical clusters</li>
+                <li>Can get stuck in local optima</li>
+            </ul>
+        </div>
+    </div>
+    
+    <h2>Next Steps</h2>
+    <p>Now that you understand the concepts, explore the practical applications:</p>
+    <div style="margin-top: 20px;">
+        <p>
+            <a href="/unsupervised-learning/manual-exercise" style="background-color: #667eea; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; display: inline-block; margin-right: 10px;">View Manual K-Means Exercise →</a>
+            <a href="/unsupervised-learning/clustering-app" style="background-color: #4caf50; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; display: inline-block;">Try Clustering Application →</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

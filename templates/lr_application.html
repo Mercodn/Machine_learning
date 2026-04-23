@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Linear Regression - Application{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>📊 Linear Regression - Application</h1>
+    <p>Interactive tool for grade prediction based on study hours</p>
+</div>
+
+<div class="content">
+    <h2>Regression Model Visualization</h2>
+    <div class="plot-container">
+        <img src="data:image/png;base64,{{ plot_url }}" alt="Regression Plot">
+    </div>
+    
+    <h2>Dataset Overview</h2>
+    <p>The model was trained on data from 20 students:</p>
+    <div style="background-color: #f9f9f9; padding: 15px; margin: 20px 0; border-radius: 8px;">
+        <div style="display: flex; flex-wrap: wrap;">
+            <div class="stat-box">
+                <strong>{{ stats.count }}</strong>
+                <span>Students in Dataset</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.hours_mean }} hours</strong>
+                <span>Average Study Hours</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.grade_mean }}/5.0</strong>
+                <span>Average Grade</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.correlation }}</strong>
+                <span>Correlation</span>
+            </div>
+        </div>
+    </div>
+    
+    <h2>Make a Prediction</h2>
+    <p>Enter the number of study hours to predict the final grade:</p>
+    
+    {% if error %}
+    <div class="alert alert-error">
+        <strong>Error:</strong> {{ error }}
+    </div>
+    {% endif %}
+    
+    <form method="POST" action="/linear-regression/predict">
+        <div class="form-group">
+            <label for="hours">Study Hours per Week:</label>
+            <input 
+                type="number" 
+                id="hours" 
+                name="hours" 
+                step="0.1" 
+                min="0" 
+                max="24" 
+                placeholder="Enter hours (0-24)"
+                {% if hours %}value="{{ hours }}"{% endif %}
+                required
+            >
+        </div>
+        <button type="submit">Predict Grade</button>
+    </form>
+    
+    {% if result is not None %}
+    <div class="result">
+        <h3>📈 Prediction Result</h3>
+        <p><strong>Input:</strong> {{ hours }} hours of study per week</p>
+        <p><strong>Predicted Final Grade:</strong> <span style="color: #667eea; font-size: 1.3rem; font-weight: bold;">{{ result }}/5.0</span></p>
+        <p style="margin-top: 15px; color: #666; font-size: 0.9rem;">
+            Based on the trained linear regression model using historical student data.
+        </p>
+    </div>
+    {% endif %}
+</div>
+
+<div class="content">
+    <h2>Model Interpretation</h2>
+    
+    {% if parameters %}
+    <div style="background-color: #f0f7ff; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Regression Equation</h3>
+        <p style="font-family: monospace; font-size: 1.1rem; color: #333;">
+            {{ parameters.equation }}
+        </p>
+        
+        <h4>What this means:</h4>
+        <ul style="list-style-position: inside; line-height: 2;">
+            <li>For every additional hour of study, the grade increases by <strong>{{ parameters.slope }}</strong> points</li>
+            <li>If a student studies 0 hours, their predicted grade would be <strong>{{ parameters.intercept }}</strong></li>
+            <li>The relationship between study hours and grades is positive and linear</li>
+        </ul>
+    </div>
+    {% endif %}
+    
+    <h2>Example Predictions</h2>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <thead>
+            <tr style="background-color: #667eea; color: white;">
+                <th style="padding: 12px; text-align: left;">Study Hours</th>
+                <th style="padding: 12px; text-align: left;">Predicted Grade</th>
+                <th style="padding: 12px; text-align: left;">Interpretation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;">0 hours</td>
+                <td style="padding: 12px;">{{ parameters.intercept }}/5.0</td>
+                <td style="padding: 12px;">No study</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
+                <td style="padding: 12px;">5 hours</td>
+                <td style="padding: 12px;">~{{ (parameters.intercept | float + 5 * parameters.slope | float) | round(2) }}/5.0</td>
+                <td style="padding: 12px;">Part-time student</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;">10 hours</td>
+                <td style="padding: 12px;">~{{ (parameters.intercept | float + 10 * parameters.slope | float) | round(2) }}/5.0</td>
+                <td style="padding: 12px;">Regular student</td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td style="padding: 12px;">20 hours</td>
+                <td style="padding: 12px;">~{{ (parameters.intercept | float + 20 * parameters.slope | float) | round(2) }}/5.0</td>
+                <td style="padding: 12px;">Dedicated student</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>Understanding the Plot</h2>
+    <ul style="list-style-position: inside; line-height: 2;">
+        <li><strong>Blue Points:</strong> Actual data from the training set (actual student grades)</li>
+        <li><strong>Red Line:</strong> The regression line (the model's predictions)</li>
+        <li><strong>The Gap:</strong> Differences between actual and predicted values are called residuals</li>
+        <li><strong>Best Fit:</strong> The line minimizes the total distance of all points from it</li>
+    </ul>
+</div>
+
+<div class="content">
+    <p><a href="/linear-regression/concepts" style="color: #667eea; font-weight: 600;">← Back to Concepts</a></p>
+</div>
+{% endblock %}

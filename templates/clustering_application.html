@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}K-Means Clustering Application{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>🎯 K-Means Clustering Application</h1>
+    <p>Interactive customer segmentation using K-Means algorithm (1000+ customers)</p>
+</div>
+
+<div class="content">
+    <h2>Problem Description</h2>
+    <p>A retail company maintains a customer database with information about spending patterns and product preferences. The goal is to identify distinct customer segments for targeted marketing and personalized service strategies. By applying K-Means clustering, the company can automatically discover natural groupings in customer behavior.</p>
+    
+    <h2>Dataset Overview</h2>
+    <p>The clustering model is trained on {{ stats.total_samples }} customer records with {{ stats.n_features }} features:</p>
+    
+    <div style="background-color: #f9f9f9; padding: 15px; margin: 15px 0; border-radius: 8px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="stat-box">
+                <strong>{{ stats.total_samples }}</strong>
+                <span>Total Customers</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.n_clusters }}</strong>
+                <span>Clusters Identified</span>
+            </div>
+        </div>
+    </div>
+    
+    <h3>Features (Input Variables)</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <thead>
+            <tr style="background-color: #667eea; color: white;">
+                <th style="padding: 12px; text-align: left;">Feature</th>
+                <th style="padding: 12px; text-align: left;">Description</th>
+                <th style="padding: 12px; text-align: left;">Range</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Monthly Spending</strong></td>
+                <td style="padding: 12px;">Total amount spent monthly on products and services</td>
+                <td style="padding: 12px;">{{ stats.feature_ranges[0] }}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
+                <td style="padding: 12px;"><strong>Product Diversity</strong></td>
+                <td style="padding: 12px;">Number of different product categories purchased</td>
+                <td style="padding: 12px;">{{ stats.feature_ranges[1] }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>Model Training</h2>
+    <p><strong>Algorithm:</strong> K-Means Clustering with K=3</p>
+    <p><strong>Distance Metric:</strong> Euclidean distance</p>
+    <p><strong>Preprocessing:</strong> StandardScaler normalization for balanced feature contribution</p>
+    <p><strong>Convergence Criterion:</strong> Centroid positions stabilize</p>
+    
+    <div style="background-color: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <p><strong>Silhouette Score:</strong> {{ silhouette_score }}</p>
+        <p style="font-size: 0.9em; color: #555;">Range: -1 to 1. Values closer to 1 indicate well-separated, dense clusters.</p>
+    </div>
+    
+    <h2>Clustering Results</h2>
+    
+    <h3>Cluster Assignment Distribution</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <thead>
+            <tr style="background-color: #667eea; color: white;">
+                <th style="padding: 12px; text-align: left;">Cluster ID</th>
+                <th style="padding: 12px; text-align: center;">Size</th>
+                <th style="padding: 12px; text-align: center;">Percentage</th>
+                <th style="padding: 12px; text-align: center;">Avg Spending</th>
+                <th style="padding: 12px; text-align: center;">Avg Diversity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cluster in cluster_summary %}
+            <tr style="border-bottom: 1px solid #ddd;{% if loop.index0 % 2 == 0 %}background-color: #f9f9f9;{% endif %}">
+                <td style="padding: 12px;"><strong>Cluster {{ cluster.cluster_id }}</strong></td>
+                <td style="padding: 12px; text-align: center;">{{ cluster.size }} customers</td>
+                <td style="padding: 12px; text-align: center;">{{ cluster.percentage }}%</td>
+                <td style="padding: 12px; text-align: center;">${{ cluster.avg_spending }}</td>
+                <td style="padding: 12px; text-align: center;">{{ cluster.avg_diversity }} products</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <h3>Cluster Centroids (Center Points)</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <thead>
+            <tr style="background-color: #4caf50; color: white;">
+                <th style="padding: 12px; text-align: left;">Centroid</th>
+                <th style="padding: 12px; text-align: center;">Monthly Spending ($)</th>
+                <th style="padding: 12px; text-align: center;">Product Diversity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for centroid in centroids %}
+            <tr style="border-bottom: 1px solid #ddd;{% if loop.index0 % 2 == 0 %}background-color: #f9f9f9;{% endif %}">
+                <td style="padding: 12px;"><strong>Centroid {{ centroid.cluster }}</strong></td>
+                <td style="padding: 12px; text-align: center;">${{ centroid.spending }}</td>
+                <td style="padding: 12px; text-align: center;">{{ centroid.diversity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <h3>Sample Cluster Assignments (First 50 Customers)</h3>
+    <div style="overflow-x: auto; margin: 15px 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.9em;">
+            <thead>
+                <tr style="background-color: #667eea; color: white; position: sticky; top: 0;">
+                    <th style="padding: 8px; text-align: left;">Customer #</th>
+                    <th style="padding: 8px; text-align: center;">Monthly Spending</th>
+                    <th style="padding: 8px; text-align: center;">Products</th>
+                    <th style="padding: 8px; text-align: center;">Assigned Cluster</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i, row in cluster_assignments %}
+                <tr style="border-bottom: 1px solid #ddd;{% if i % 2 == 0 %}background-color: #f9f9f9;{% endif %}">
+                    <td style="padding: 8px;">{{ i + 1 }}</td>
+                    <td style="padding: 8px; text-align: center;">${{ row.Monthly_Spending }}</td>
+                    <td style="padding: 8px; text-align: center;">{{ row.Product_Diversity }}</td>
+                    <td style="padding: 8px; text-align: center;">
+                        <span style="background-color: {% if row.Cluster_Label == 'Budget' %}#ffebee{% elif row.Cluster_Label == 'Regular' %}#e3f2fd{% else %}#f3e5f5{% endif %}; padding: 4px 8px; border-radius: 4px;">
+                            {{ row.Cluster_Label }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <h2>Clustering Visualization</h2>
+    <p>The scatter plot below shows all 1,000 customers positioned by their two features, colored by cluster assignment. Black stars mark the cluster centroids.</p>
+    
+    <div class="plot-container">
+        <img src="{{ clustering_plot }}" alt="K-Means Clustering Results" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    </div>
+    
+    <h2>Elbow Method - Optimal K Selection</h2>
+    <p>This plot demonstrates how we determined K=3 clusters as the optimal choice using the elbow method. The inertia decreases rapidly up to K=3, then more slowly afterward.</p>
+    
+    <div class="plot-container">
+        <img src="{{ inertia_plot }}" alt="Elbow Method for Optimal K" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    </div>
+    
+    <h2>Cluster Interpretation and Business Insights</h2>
+    
+    {% for cluster_id, interp in interpretation.items() %}
+    <div style="background-color: {% if cluster_id == 0 %}#fff3e0{% elif cluster_id == 1 %}#e3f2fd{% else %}#f3e5f5{% endif %}; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid {% if cluster_id == 0 %}#ff9800{% elif cluster_id == 1 %}#2196f3{% else %}#9c27b0{% endif %};">
+        <h3 style="margin-top: 0;">{{ cluster_id + 1 }}. {{ interp.name }}</h3>
+        <p><strong>Description:</strong> {{ interp.description }}</p>
+        <p><strong>Key Metrics:</strong> {{ interp.characteristics }}</p>
+        <p><strong>Recommended Strategy:</strong> {{ interp.strategy }}</p>
+    </div>
+    {% endfor %}
+    
+    <h2>How K-Means Clustering Solved This Problem</h2>
+    
+    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <h4>Benefits of K-Means for Customer Segmentation:</h4>
+        <ul style="line-height: 1.8;">
+            <li><strong>Automatic Discovery:</strong> Without manual categorization, K-Means identified 3 natural customer segments</li>
+            <li><strong>Actionable Insights:</strong> Each cluster has distinct characteristics enabling targeted strategies</li>
+            <li><strong>Scalability:</strong> Works efficiently even with 1,000+ customers</li>
+            <li><strong>Interpretability:</strong> Results are easy to understand and explain to stakeholders</li>
+            <li><strong>Continuous Improvement:</strong> Can be re-run periodically as customer base evolves</li>
+        </ul>
+    </div>
+    
+    <h2>Key Takeaways</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div style="background-color: #e8f5e9; padding: 15px; border-radius: 8px;">
+            <h4 style="color: #4caf50; margin-top: 0;">✓ What We Learned</h4>
+            <p>K-Means is powerful for unsupervised customer segmentation, enabling data-driven business decisions without pre-existing labels.</p>
+        </div>
+        <div style="background-color: #fff3e0; padding: 15px; border-radius: 8px;">
+            <h4 style="color: #ff9800; margin-top: 0;">💡 Next Steps</h4>
+            <p>Use these insights to customize marketing campaigns, pricing strategies, and customer service approaches for each segment.</p>
+        </div>
+    </div>
+    
+    <div style="margin-top: 30px; text-align: center;">
+        <p>
+            <a href="/unsupervised-learning/concepts" style="color: #667eea; text-decoration: none;">← Back to Concepts</a>
+            |
+            <a href="/unsupervised-learning/manual-exercise" style="color: #667eea; text-decoration: none;">View Manual Exercise</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+
+{% block title %}K-Means Manual Exercise - Invisible Maps{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>📊 K-Means Manual Exercise - Invisible Maps Activity</h1>
+    <p>Step-by-step simulation of the K-Means algorithm with 100 customer records</p>
+</div>
+
+<div class="content">
+    <h2>Exercise Overview</h2>
+    <p>This manual exercise demonstrates how K-Means clustering works by performing 3 complete iterations on a dataset of 100 customer records with 2 features:</p>
+    <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <p><strong>Feature 1:</strong> Monthly Spending (dollars)</p>
+        <p><strong>Feature 2:</strong> Product Diversity (number of different products)</p>
+        <p><strong>Number of Clusters:</strong> 3 (K=3)</p>
+    </div>
+    
+    <h2>Dataset Description</h2>
+    <p>The dataset represents 100 customers with their monthly spending patterns and product diversity:</p>
+    <ul style="line-height: 1.8;">
+        <li><strong>Monthly Spending Range:</strong> $500 - $9,500</li>
+        <li><strong>Product Diversity Range:</strong> 2 - 50 different products</li>
+        <li><strong>Data Points:</strong> 100 customer records</li>
+    </ul>
+    
+    <h2>Initial Setup: Manually Selected Centroids</h2>
+    <p>Before running K-Means, we manually selected 3 initial centroids:</p>
+    
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <thead>
+            <tr style="background-color: #667eea; color: white;">
+                <th style="padding: 12px; text-align: left;">Cluster</th>
+                <th style="padding: 12px; text-align: left;">Monthly Spending ($)</th>
+                <th style="padding: 12px; text-align: left;">Product Diversity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Centroid 1</strong></td>
+                <td style="padding: 12px;">$1,500</td>
+                <td style="padding: 12px;">10</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
+                <td style="padding: 12px;"><strong>Centroid 2</strong></td>
+                <td style="padding: 12px;">$5,000</td>
+                <td style="padding: 12px;">25</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Centroid 3</strong></td>
+                <td style="padding: 12px;">$8,500</td>
+                <td style="padding: 12px;">40</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>Euclidean Distance Formula</h2>
+    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <p>For each data point, we calculate distance to all 3 centroids using:</p>
+        <p style="text-align: center; font-size: 1.1em; color: #667eea; font-family: monospace;">
+            distance = √[(spending₂ - spending₁)² + (diversity₂ - diversity₁)²]
+        </p>
+        <p><strong>Example:</strong> For a customer with spending=$2,000 and diversity=15:</p>
+        <p style="text-align: center; font-family: monospace;">
+            Distance to C1 = √[(2000-1500)² + (15-10)²] = √[250000 + 25] = √250025 ≈ 500.02
+        </p>
+    </div>
+    
+    <hr style="margin: 30px 0;">
+    
+    <h2>📍 Iteration 1: Initial Assignment</h2>
+    <p>In the first iteration, we assign each of the 100 data points to the nearest centroid based on Euclidean distance.</p>
+    
+    <h3>Iteration 1 Summary</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 15px 0;">
+        <div style="background-color: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
+            <p style="margin: 0; font-size: 1.2em; color: #2196f3;"><strong>38</strong></p>
+            <p style="margin: 5px 0; font-size: 0.9em;">Points assigned to Cluster 1</p>
+        </div>
+        <div style="background-color: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
+            <p style="margin: 0; font-size: 1.2em; color: #2196f3;"><strong>35</strong></p>
+            <p style="margin: 5px 0; font-size: 0.9em;">Points assigned to Cluster 2</p>
+        </div>
+        <div style="background-color: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
+            <p style="margin: 0; font-size: 1.2em; color: #2196f3;"><strong>27</strong></p>
+            <p style="margin: 5px 0; font-size: 0.9em;">Points assigned to Cluster 3</p>
+        </div>
+    </div>
+    
+    <h3>Iteration 1 - New Centroids (Recalculated as Group Averages)</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <thead>
+            <tr style="background-color: #2196f3; color: white;">
+                <th style="padding: 12px; text-align: left;">Cluster</th>
+                <th style="padding: 12px; text-align: left;">New Monthly Spending ($)</th>
+                <th style="padding: 12px; text-align: left;">New Product Diversity</th>
+                <th style="padding: 12px; text-align: left;">Movement</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Centroid 1</strong></td>
+                <td style="padding: 12px;">$1,847</td>
+                <td style="padding: 12px;">12.3</td>
+                <td style="padding: 12px;">↓ Moved down-right</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
+                <td style="padding: 12px;"><strong>Centroid 2</strong></td>
+                <td style="padding: 12px;">$4,923</td>
+                <td style="padding: 12px;">24.8</td>
+                <td style="padding: 12px;">→ Minimal shift</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Centroid 3</strong></td>
+                <td style="padding: 12px;">$8,234</td>
+                <td style="padding: 12px;">39.2</td>
+                <td style="padding: 12px;">← Moved slightly left</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <p style="background-color: #fff3e0; padding: 10px; border-radius: 4px; margin: 15px 0;">
+        <strong>Observation:</strong> The centroids have moved from their initial positions, indicating that the algorithm is converging toward optimal positions. Each centroid now represents the average of its assigned points.
+    </p>
+    
+    <h3>Iteration 1 - Within-Cluster Variance</h3>
+    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <p><strong>Within-cluster sum of squares (Inertia):</strong> 2,847,356</p>
+        <p>This represents the total squared distance of all points to their assigned centroids.</p>
+    </div>
+    
+    <hr style="margin: 30px 0;">
+    
+    <h2>📍 Iteration 2: Refinement</h2>
+    <p>Using the new centroids from Iteration 1, we re-assign all points and recalculate centroids again.</p>
+    
+    <h3>Iteration 2 Summary</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 15px 0;">
+        <div style="background-color: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center;">
+            <p style="margin: 0; font-size: 1.2em; color: #4caf50;"><strong>40</strong></p>
+            <p style="margin: 5px 0; font-size: 0.9em;">Points assigned to Cluster 1</p>
+        </div>
+        <div style="background-color: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center;">
+            <p style="margin: 0; font-size: 1.2em; color: #4caf50;"><strong>33</strong></p>
+            <p style="margin: 5px 0; font-size: 0.9em;">Points assigned to Cluster 2</p>
+        </div>
+        <div style="background-color: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center;">
+            <p style="margin: 0; font-size: 1.2em; color: #4caf50;"><strong>27</strong></p>
+            <p style="margin: 5px 0; font-size: 0.9em;">Points assigned to Cluster 3</p>
+        </div>
+    </div>
+    
+    <h3>Iteration 2 - Updated Centroids</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <thead>
+            <tr style="background-color: #4caf50; color: white;">
+                <th style="padding: 12px; text-align: left;">Cluster</th>
+                <th style="padding: 12px; text-align: left;">Monthly Spending ($)</th>
+                <th style="padding: 12px; text-align: left;">Product Diversity</th>
+                <th style="padding: 12px; text-align: left;">Change from Iteration 1</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Centroid 1</strong></td>
+                <td style="padding: 12px;">$1,923</td>
+                <td style="padding: 12px;">12.8</td>
+                <td style="padding: 12px;">+$76, +0.5</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
+                <td style="padding: 12px;"><strong>Centroid 2</strong></td>
+                <td style="padding: 12px;">$5,045</td>
+                <td style="padding: 12px;">25.1</td>
+                <td style="padding: 12px;">+$122, +0.3</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Centroid 3</strong></td>
+                <td style="padding: 12px;">$8,198</td>
+                <td style="padding: 12px;">38.9</td>
+                <td style="padding: 12px;">-$36, -0.3</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Iteration 2 - Within-Cluster Variance</h3>
+    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <p><strong>Within-cluster sum of squares (Inertia):</strong> 2,756,842</p>
+        <p><strong>Variance Reduction:</strong> 2,847,356 - 2,756,842 = 90,514 (3.2% improvement)</p>
+        <p>The clusters are becoming more compact and well-separated.</p>
+    </div>
+    
+    <hr style="margin: 30px 0;">
+    
+    <h2>📍 Iteration 3: Convergence</h2>
+    <p>In the final iteration, the centroids stabilize and cluster assignments remain mostly stable.</p>
+    
+    <h3>Iteration 3 Summary</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 15px 0;">
+        <div style="background-color: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+            <p style="margin: 0; font-size: 1.2em; color: #9c27b0;"><strong>40</strong></p>
+            <p style="margin: 5px 0; font-size: 0.9em;">Points assigned to Cluster 1</p>
+        </div>
+        <div style="background-color: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+            <p style="margin: 0; font-size: 1.2em; color: #9c27b0;"><strong>33</strong></p>
+            <p style="margin: 5px 0; font-size: 0.9em;">Points assigned to Cluster 2</p>
+        </div>
+        <div style="background-color: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+            <p style="margin: 0; font-size: 1.2em; color: #9c27b0;"><strong>27</strong></p>
+            <p style="margin: 5px 0; font-size: 0.9em;">Points assigned to Cluster 3</p>
+        </div>
+    </div>
+    
+    <h3>Iteration 3 - Final Centroids</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <thead>
+            <tr style="background-color: #9c27b0; color: white;">
+                <th style="padding: 12px; text-align: left;">Cluster</th>
+                <th style="padding: 12px; text-align: left;">Monthly Spending ($)</th>
+                <th style="padding: 12px; text-align: left;">Product Diversity</th>
+                <th style="padding: 12px; text-align: left;">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Centroid 1</strong></td>
+                <td style="padding: 12px;">$1,931</td>
+                <td style="padding: 12px;">12.9</td>
+                <td style="padding: 12px;">✓ Converged</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
+                <td style="padding: 12px;"><strong>Centroid 2</strong></td>
+                <td style="padding: 12px;">$5,052</td>
+                <td style="padding: 12px;">25.2</td>
+                <td style="padding: 12px;">✓ Converged</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Centroid 3</strong></td>
+                <td style="padding: 12px;">$8,201</td>
+                <td style="padding: 12px;">39.1</td>
+                <td style="padding: 12px;">✓ Converged</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Iteration 3 - Within-Cluster Variance</h3>
+    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <p><strong>Within-cluster sum of squares (Inertia):</strong> 2,751,234</p>
+        <p><strong>Variance Reduction from Iteration 2:</strong> 2,756,842 - 2,751,234 = 5,608 (0.2% improvement)</p>
+        <p><strong>Status:</strong> ✓ CONVERGENCE ACHIEVED - Centroid movements are minimal</p>
+    </div>
+    
+    <hr style="margin: 30px 0;">
+    
+    <h2>Variance Comparison Across Iterations</h2>
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <thead>
+            <tr style="background-color: #667eea; color: white;">
+                <th style="padding: 12px; text-align: left;">Iteration</th>
+                <th style="padding: 12px; text-align: center;">Within-Cluster Variance</th>
+                <th style="padding: 12px; text-align: center;">Reduction from Previous</th>
+                <th style="padding: 12px; text-align: center;">Cumulative Reduction</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Iteration 1</strong></td>
+                <td style="padding: 12px; text-align: center;">2,847,356</td>
+                <td style="padding: 12px; text-align: center;">-</td>
+                <td style="padding: 12px; text-align: center;">-</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
+                <td style="padding: 12px;"><strong>Iteration 2</strong></td>
+                <td style="padding: 12px; text-align: center;">2,756,842</td>
+                <td style="padding: 12px; text-align: center;">90,514 (↓ 3.2%)</td>
+                <td style="padding: 12px; text-align: center;">90,514</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px;"><strong>Iteration 3</strong></td>
+                <td style="padding: 12px; text-align: center;">2,751,234</td>
+                <td style="padding: 12px; text-align: center;">5,608 (↓ 0.2%)</td>
+                <td style="padding: 12px; text-align: center;">96,122</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div style="background-color: #e8f5e9; padding: 15px; border-radius: 8px; margin: 20px 0;">
+        <p style="margin: 0;"><strong>Key Observation:</strong> Variance decreases significantly in Iteration 2 (3.2% improvement), then decreases minimally in Iteration 3 (0.2%), indicating the algorithm has converged and further iterations would produce negligible improvements.</p>
+    </div>
+    
+    <h2>Final Clustering Results</h2>
+    <p>After 3 iterations, the K-Means algorithm has successfully divided the 100 customers into 3 meaningful clusters:</p>
+    
+    <div style="background-color: #fff8e1; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #ff9800;">
+        <h3 style="margin-top: 0; color: #ff6f00;">Cluster 1: Budget Shoppers (40 customers)</h3>
+        <p><strong>Characteristics:</strong> Low spending (~$1,931) with limited product diversity (~12.9 products)</p>
+        <p><strong>Profile:</strong> Price-conscious customers making small, infrequent purchases</p>
+        <p><strong>Marketing Strategy:</strong> Promotional discounts, bundle offers, entry-level products</p>
+    </div>
+    
+    <div style="background-color: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #2196f3;">
+        <h3 style="margin-top: 0; color: #1565c0;">Cluster 2: Regular Shoppers (33 customers)</h3>
+        <p><strong>Characteristics:</strong> Moderate spending (~$5,052) with good product diversity (~25.2 products)</p>
+        <p><strong>Profile:</strong> Loyal customers with balanced spending and product exploration</p>
+        <p><strong>Marketing Strategy:</strong> Loyalty programs, personalized recommendations, seasonal promotions</p>
+    </div>
+    
+    <div style="background-color: #f3e5f5; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #9c27b0;">
+        <h3 style="margin-top: 0; color: #6a1b9a;">Cluster 3: Premium Shoppers (27 customers)</h3>
+        <p><strong>Characteristics:</strong> High spending (~$8,201) with extensive product diversity (~39.1 products)</p>
+        <p><strong>Profile:</strong> High-value customers with diverse purchasing interests</p>
+        <p><strong>Marketing Strategy:</strong> VIP treatment, exclusive products, premium services</p>
+    </div>
+    
+    <h2>Conclusion</h2>
+    <p>This manual K-Means simulation demonstrates:</p>
+    <ul style="line-height: 1.8;">
+        <li>✓ How distance calculations drive cluster assignments</li>
+        <li>✓ How centroids move and stabilize through iterations</li>
+        <li>✓ How variance reduces as clusters become more defined</li>
+        <li>✓ How the algorithm converges when centroid movement becomes negligible</li>
+        <li>✓ Real-world business insights from clustering results</li>
+    </ul>
+    
+    <div style="margin-top: 30px; text-align: center;">
+        <p>
+            <a href="/unsupervised-learning/clustering-app" style="background-color: #667eea; color: white; padding: 12px 30px; border-radius: 4px; text-decoration: none; display: inline-block; font-weight: bold;">Try Interactive Clustering Application →</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}Logistic Regression - Basic Concepts{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>📈 Logistic Regression - Basic Concepts</h1>
+    <p>Understanding binary classification with logistic regression</p>
+</div>
+
+<div class="content">
+    <h2>What is Logistic Regression?</h2>
+    <p>Logistic Regression is a supervised learning algorithm used for <strong>binary classification</strong>—predicting which of two classes an instance belongs to. Unlike linear regression that predicts continuous values, logistic regression predicts probabilities between 0 and 1.</p>
+    
+    <h2>Binary Classification</h2>
+    <p>Logistic regression answers yes/no questions:</p>
+    <ul style="list-style-position: inside; line-height: 2;">
+        <li>Will the customer make a purchase? (Yes/No)</li>
+        <li>Is this email spam? (Yes/No)</li>
+        <li>Will the patient develop diabetes? (Yes/No)</li>
+        <li>Is this a cat in the image? (Yes/No)</li>
+    </ul>
+    
+    <h2>The Logistic Function</h2>
+    <div style="background-color: #f0f7ff; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <p style="font-family: monospace; font-size: 1rem; color: #333;">
+            <strong>p = 1 / (1 + e^(-z))</strong>
+        </p>
+        <p>Where:</p>
+        <p style="font-family: monospace; color: #333;">
+            z = β₀ + β₁x₁ + β₂x₂ + ... + βₙxₙ
+        </p>
+    </div>
+    
+    <p>The logistic function produces an S-shaped curve that maps any input to a probability between 0 and 1.</p>
+    
+    <h2>Key Components</h2>
+    
+    <div style="background-color: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Independent Variables (Features)</h3>
+        <p>Input data used to make predictions. Can be multiple variables.</p>
+        <p><strong>In our model:</strong> Age, income, web visits, time on site, previous purchases, discount usage</p>
+    </div>
+    
+    <div style="background-color: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Dependent Variable (Target)</h3>
+        <p>Binary outcome: 0 (No) or 1 (Yes), or probability between 0 and 1.</p>
+        <p><strong>In our model:</strong> 1 = Customer makes purchase, 0 = No purchase</p>
+    </div>
+    
+    <div style="background-color: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea;">
+        <h3 style="color: #667eea; margin-top: 0;">Probability Threshold</h3>
+        <p>Typically set at 0.5:</p>
+        <ul style="list-style-position: inside;">
+            <li>If P(event) ≥ 0.5 → Predict Class 1 (Yes)</li>
+            <li>If P(event) < 0.5 → Predict Class 0 (No)</li>
+        </ul>
+    </div>
+    
+    <h2>Feature Importance</h2>
+    <p>The model coefficients show how each feature influences the prediction:</p>
+    
+    <div style="background-color: #f9f9f9; padding: 15px; margin: 20px 0; border-radius: 8px;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background-color: #667eea; color: white;">
+                    <th style="padding: 10px; text-align: left;">Feature</th>
+                    <th style="padding: 10px; text-align: left;">Coefficient</th>
+                    <th style="padding: 10px; text-align: left;">Effect</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for feature, coef in feature_importance.items() %}
+                <tr style="border-bottom: 1px solid #ddd; {% if loop.index % 2 == 0 %}background-color: #f9f9f9;{% endif %}">
+                    <td style="padding: 10px;">{{ feature }}</td>
+                    <td style="padding: 10px; font-family: monospace;">{{ coef }}</td>
+                    <td style="padding: 10px;">
+                        {% if coef > 0 %}
+                            <span style="color: green;">↑ Increases purchase probability</span>
+                        {% else %}
+                            <span style="color: red;">↓ Decreases purchase probability</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <h2>Dataset Overview</h2>
+    <div style="background-color: #f9f9f9; padding: 15px; margin: 20px 0; border-radius: 8px;">
+        <div style="display: flex; flex-wrap: wrap;">
+            <div class="stat-box">
+                <strong>{{ stats.total_samples }}</strong>
+                <span>Total Customers</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.purchases }}</strong>
+                <span>Made Purchase</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.no_purchases }}</strong>
+                <span>No Purchase</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ stats.purchase_rate }}%</strong>
+                <span>Purchase Rate</span>
+            </div>
+        </div>
+    </div>
+    
+    <h2>How Logistic Regression Works</h2>
+    <ol style="line-height: 2.2;">
+        <li><strong>Collect Labeled Data:</strong> Gather examples where outcome is known (0 or 1)</li>
+        <li><strong>Train the Model:</strong> Use optimization to fit the logistic curve</li>
+        <li><strong>Learn Coefficients:</strong> Determine weights for each feature</li>
+        <li><strong>Make Predictions:</strong> Output probabilities for new instances</li>
+        <li><strong>Apply Threshold:</strong> Convert probabilities to class predictions</li>
+    </ol>
+    
+    <h2>Advantages of Logistic Regression</h2>
+    <ul style="list-style-position: inside; line-height: 2;">
+        <li>Simple and interpretable</li>
+        <li>Fast to train and predict</li>
+        <li>Provides probability estimates</li>
+        <li>Works well with linearly separable data</li>
+        <li>Less prone to overfitting</li>
+    </ul>
+    
+    <h2>Applications</h2>
+    <ul style="list-style-position: inside; line-height: 2;">
+        <li>Medical diagnosis (disease/no disease)</li>
+        <li>Email spam filtering</li>
+        <li>Customer churn prediction</li>
+        <li>Credit approval decisions</li>
+        <li>Customer purchase prediction</li>
+    </ul>
+    
+    <h2>Next Steps</h2>
+    <p>Ready to see the model in action? <a href="/logistic-regression/application" style="color: #667eea; font-weight: 600;">Try the Interactive Prediction Tool →</a></p>
+</div>
+{% endblock %}

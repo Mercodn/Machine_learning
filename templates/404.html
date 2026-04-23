@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Page Not Found (404){% endblock %}
+
+{% block content %}
+<div class="header" style="background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);">
+    <h1>404 - Page Not Found</h1>
+    <p>Sorry, the page you're looking for doesn't exist.</p>
+</div>
+
+<div class="content" style="text-align: center;">
+    <p style="font-size: 1.2rem; margin: 30px 0;">The URL you visited doesn't match any page on this site.</p>
+    
+    <a href="/" style="display: inline-block; background-color: #667eea; color: white; padding: 12px 30px; border-radius: 4px; text-decoration: none; margin-top: 20px;">← Return to Home</a>
+</div>
+{% endblock %}
