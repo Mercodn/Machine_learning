@@ -10,6 +10,10 @@ import webbrowser
 import threading
 import time
 
+# Configure matplotlib for headless environment
+import matplotlib
+matplotlib.use('Agg')
+
 # Add models directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'models'))
 
@@ -29,9 +33,10 @@ from kmeans_clustering_model import (get_dataset_stats as kmeans_dataset_stats, 
 app = Flask(__name__)
 
 def open_browser():
-    """Open browser after a short delay to allow Flask to start"""
-    time.sleep(1.5)  # Wait for Flask to start
-    webbrowser.open('http://127.0.0.1:5000')
+    """Open browser after a short delay to allow Flask to start (development only)"""
+    if os.getenv('FLASK_ENV') != 'production':
+        time.sleep(1.5)  # Wait for Flask to start
+        webbrowser.open('http://127.0.0.1:5000')
 
 # ============================================================================
 # HOME ROUTES
@@ -425,6 +430,13 @@ def server_error(error):
 
 
 if __name__ == "__main__":
-    # Start browser in a separate thread
+    # Start browser in a separate thread (development only)
     threading.Thread(target=open_browser).start()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+
+    # Get port from environment variable (for production deployment)
+    port = int(os.environ.get('PORT', 5000))
+
+    # Run in debug mode only in development
+    debug_mode = os.getenv('FLASK_ENV') != 'production'
+
+    app.run(debug=debug_mode, host='0.0.0.0', port=port)
