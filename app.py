@@ -153,7 +153,9 @@ def lr_application():
     
     return render_template("lr_application.html",
                          plot_url=plot_url,
-                         stats=stats)
+                         stats=stats,
+                         result=None,
+                         parameters=None)
 
 
 @app.route("/linear-regression/predict", methods=["POST"])
@@ -167,13 +169,17 @@ def lr_predict():
             return render_template("lr_application.html",
                                  error="Study hours must be a positive number",
                                  plot_url=get_regression_plot(),
-                                 stats=lr_dataset_stats())
+                                 stats=lr_dataset_stats(),
+                                 result=None,
+                                 parameters=None)
         
         if hours > 24:
             return render_template("lr_application.html",
                                  error="Study hours cannot exceed 24 hours per day",
                                  plot_url=get_regression_plot(),
-                                 stats=lr_dataset_stats())
+                                 stats=lr_dataset_stats(),
+                                 result=None,
+                                 parameters=None)
         
         result = predict_grade(hours)
         parameters = get_model_parameters()
@@ -189,7 +195,9 @@ def lr_predict():
         return render_template("lr_application.html",
                              error="Please enter a valid number",
                              plot_url=get_regression_plot(),
-                             stats=lr_dataset_stats())
+                             stats=lr_dataset_stats(),
+                             result=None,
+                             parameters=None)
 
 @app.route("/logistic-regression/concepts")
 def log_concepts():
@@ -210,7 +218,8 @@ def log_application():
     
     return render_template("log_application.html",
                          plot_url=plot_url,
-                         stats=stats)
+                         stats=stats,
+                         result=None)
 
 
 @app.route("/logistic-regression/predict", methods=["POST"])
@@ -229,13 +238,15 @@ def log_predict():
             return render_template("log_application.html",
                                  error="All values must be positive numbers",
                                  plot_url=get_partial_dependence_plot(),
-                                 stats=log_dataset_stats())
+                                 stats=log_dataset_stats(),
+                                 result=None)
         
         if age > 150 or age < 13:
             return render_template("log_application.html",
                                  error="Please enter a valid age (13-150)",
                                  plot_url=get_partial_dependence_plot(),
-                                 stats=log_dataset_stats())
+                                 stats=log_dataset_stats(),
+                                 result=None)
         
         result = predict_purchase(age, income, web_visits, time_spent, prev_purchases, discount_used)
         
@@ -248,7 +259,8 @@ def log_predict():
         return render_template("log_application.html",
                              error="Please enter valid numbers",
                              plot_url=get_partial_dependence_plot(),
-                             stats=log_dataset_stats())
+                             stats=log_dataset_stats(),
+                             result=None)
 
 
 

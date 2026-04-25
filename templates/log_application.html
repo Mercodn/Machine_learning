@@ -135,9 +135,9 @@
         <button type="submit" style="margin-top: 20px; width: 100%;">Predict Purchase Probability</button>
     </form>
     
-    {% if result is not None %}
+    {% if result is not none %}
     <div class="result">
-        <h3>🎯 Prediction Result</h3>
+        <h3>Prediction Result</h3>
         
         <div style="background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
             <p><strong>Final Prediction:</strong> <span style="font-size: 1.3rem; font-weight: bold; color: {% if result.prediction == 'Will Purchase' %}#4caf50{% else %}#f44336{% endif %};">

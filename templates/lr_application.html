@@ -64,9 +64,9 @@
         <button type="submit">Predict Grade</button>
     </form>
     
-    {% if result is not None %}
+    {% if result is not none %}
     <div class="result">
-        <h3>📈 Prediction Result</h3>
+        <h3>Prediction Result</h3>
         <p><strong>Input:</strong> {{ hours }} hours of study per week</p>
         <p><strong>Predicted Final Grade:</strong> <span style="color: #667eea; font-size: 1.3rem; font-weight: bold;">{{ result }}/5.0</span></p>
         <p style="margin-top: 15px; color: #666; font-size: 0.9rem;">
@@ -95,6 +95,7 @@
     </div>
     {% endif %}
     
+    {% if parameters %}
     <h2>Example Predictions</h2>
     <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
         <thead>
@@ -127,6 +128,7 @@
             </tr>
         </tbody>
     </table>
+    {% endif %}
     
     <h2>Understanding the Plot</h2>
     <ul style="list-style-position: inside; line-height: 2;">
