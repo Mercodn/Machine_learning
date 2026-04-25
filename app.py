@@ -10,11 +10,10 @@ import webbrowser
 import threading
 import time
 
-# Configure matplotlib for headless environment
+
 import matplotlib
 matplotlib.use('Agg')
 
-# Add models directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'models'))
 
 from linear_regression_model import predict_grade, get_model_parameters, get_regression_plot, get_dataset_stats as lr_dataset_stats
@@ -38,19 +37,12 @@ def open_browser():
         time.sleep(1.5)  # Wait for Flask to start
         webbrowser.open('http://127.0.0.1:5000')
 
-# ============================================================================
-# HOME ROUTES
-# ============================================================================
 
 @app.route("/")
 def home():
     """Display the main home page"""
     return render_template("index.html")
 
-
-# ============================================================================
-# MACHINE LEARNING USE CASES ROUTES
-# ============================================================================
 
 @app.route("/ml-use-cases")
 def ml_use_cases():
@@ -135,19 +127,12 @@ def use_case_detail(case_id):
     return "Use case not found", 404
 
 
-# ============================================================================
-# SUPERVISED LEARNING ROUTES
-# ============================================================================
-
 @app.route("/supervised-learning")
 def supervised_learning():
     """Display introduction to supervised learning"""
     return render_template("supervised_learning.html")
 
 
-# ============================================================================
-# LINEAR REGRESSION ROUTES
-# ============================================================================
 
 @app.route("/linear-regression/concepts")
 def lr_concepts():
@@ -205,11 +190,6 @@ def lr_predict():
                              error="Please enter a valid number",
                              plot_url=get_regression_plot(),
                              stats=lr_dataset_stats())
-
-
-# ============================================================================
-# LOGISTIC REGRESSION ROUTES
-# ============================================================================
 
 @app.route("/logistic-regression/concepts")
 def log_concepts():
@@ -271,9 +251,7 @@ def log_predict():
                              stats=log_dataset_stats())
 
 
-# ============================================================================
-# LOGISTIC REGRESSION METRICS ROUTES
-# ============================================================================
+
 
 @app.route("/logistic-regression/metrics")
 def log_metrics():
@@ -292,9 +270,7 @@ def log_metrics():
                          interpretation=interpretation)
 
 
-# ============================================================================
-# ASSIGNED CLASSIFICATION MODEL (RANDOM FOREST) ROUTES
-# ============================================================================
+
 
 @app.route("/assigned-model/concepts")
 def assigned_concepts():
@@ -374,10 +350,6 @@ def assigned_model_metrics_view():
                          interpretation=interpretation)
 
 
-# ============================================================================
-# UNSUPERVISED LEARNING - K-MEANS CLUSTERING ROUTES
-# ============================================================================
-
 @app.route("/unsupervised-learning/concepts")
 def unsupervised_concepts():
     """Display unsupervised learning and K-Means concepts"""
@@ -413,9 +385,6 @@ def clustering_application():
                          interpretation=interpretation)
 
 
-# ============================================================================
-# ERROR HANDLERS
-# ============================================================================
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -430,13 +399,13 @@ def server_error(error):
 
 
 if __name__ == "__main__":
-    # Start browser in a separate thread (development only)
+   
     threading.Thread(target=open_browser).start()
 
-    # Get port from environment variable (for production deployment)
+
     port = int(os.environ.get('PORT', 5000))
 
-    # Run in debug mode only in development
+    
     debug_mode = os.getenv('FLASK_ENV') != 'production'
 
     app.run(debug=debug_mode, host='0.0.0.0', port=port)

@@ -4,7 +4,7 @@ Unsupervised learning module for customer segmentation
 """
 
 import matplotlib
-matplotlib.use('Agg')  # Use non-GUI backend for Flask compatibility
+matplotlib.use('Agg')  
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -14,31 +14,24 @@ from sklearn.metrics import silhouette_score
 import base64
 from io import BytesIO
 
-# ============================================================================
-# DATASET GENERATION (1000+ records, 2 features)
-# ============================================================================
+
 
 def generate_clustering_dataset():
     """Generate synthetic customer spending dataset for clustering"""
     np.random.seed(42)
     
-    # Create 1000 customer records with monthly spending and product diversity
-    # Feature 1: Monthly Spending (dollars, range 100-10000)
-    # Feature 2: Product Diversity (number of different products purchased, range 1-50)
-    
-    # Generate clusters with different characteristics
+
     cluster1 = np.random.randn(350, 2) * [1500, 8] + [2000, 15]  # Budget shoppers
     cluster2 = np.random.randn(350, 2) * [2000, 10] + [5000, 30]  # Regular shoppers
     cluster3 = np.random.randn(300, 2) * [1800, 5] + [8000, 40]   # Premium shoppers
     
-    # Combine clusters
+    
     X = np.vstack([cluster1, cluster2, cluster3])
     
-    # Ensure values are within reasonable ranges
-    X[:, 0] = np.clip(X[:, 0], 100, 10000)   # Monthly spending: $100-$10,000
-    X[:, 1] = np.clip(X[:, 1], 1, 50)        # Product diversity: 1-50 products
     
-    # Create dataframe
+    X[:, 0] = np.clip(X[:, 0], 100, 10000)   
+    X[:, 1] = np.clip(X[:, 1], 1, 50)       
+    
     df = pd.DataFrame(X, columns=['Monthly_Spending', 'Product_Diversity'])
     df['Monthly_Spending'] = df['Monthly_Spending'].astype(int)
     df['Product_Diversity'] = df['Product_Diversity'].astype(int)
@@ -46,7 +39,7 @@ def generate_clustering_dataset():
     return df, X
 
 
-# Get dataset and fit model
+
 _df_clustering, _X_clustering = generate_clustering_dataset()
 _scaler = StandardScaler()
 _X_scaled = _scaler.fit_transform(_X_clustering)
@@ -56,9 +49,6 @@ _centroids_scaled = _kmeans_model.cluster_centers_
 _centroids_original = _scaler.inverse_transform(_centroids_scaled)
 
 
-# ============================================================================
-# MANUAL K-MEANS SIMULATION DATA (Part 1 - 100 records, 3 iterations)
-# ============================================================================
 
 def get_manual_kmeans_data():
     """Get the manual K-Means simulation data with 100 records and 3 iterations"""
@@ -89,16 +79,16 @@ def perform_manual_kmeans_iteration(data, centroids, iteration_num):
     n_points = len(data)
     n_clusters = len(centroids)
     
-    # Step 1: Calculate distances from each point to each centroid
+   
     distances = np.zeros((n_points, n_clusters))
     for i, point in enumerate(data):
         for j, centroid in enumerate(centroids):
             distances[i, j] = calculate_euclidean_distance(point, centroid)
     
-    # Step 2: Assign each point to nearest centroid
+
     assignments = np.argmin(distances, axis=1)
     
-    # Step 3: Calculate new centroids
+  
     new_centroids = np.zeros_like(centroids)
     for k in range(n_clusters):
         cluster_points = data[assignments == k]
@@ -107,7 +97,7 @@ def perform_manual_kmeans_iteration(data, centroids, iteration_num):
         else:
             new_centroids[k] = centroids[k]  # Keep old centroid if cluster is empty
     
-    # Step 4: Calculate within-cluster variance
+
     variance = 0
     for k in range(n_clusters):
         cluster_points = data[assignments == k]
@@ -122,7 +112,7 @@ def get_manual_kmeans_full_simulation():
     """Get complete manual K-Means simulation with 3 iterations"""
     data = get_manual_kmeans_data().values
     
-    # Initial centroids (manually selected)
+    
     initial_centroids = np.array([
         [1500, 10],
         [5000, 25],
@@ -160,9 +150,7 @@ def get_manual_kmeans_full_simulation():
     }
 
 
-# ============================================================================
-# CLUSTERING APPLICATION FUNCTIONS
-# ============================================================================
+
 
 def get_dataset_stats():
     """Get statistics about the clustering dataset"""
@@ -229,15 +217,14 @@ def get_clustering_plot():
     """Generate scatter plot with clusters and centroids"""
     fig, ax = plt.subplots(figsize=(10, 7))
     
-    # Plot points colored by cluster
+  
     colors = ['#FF6B6B', '#4ECDC4', '#45B7D1']
     for cluster_id in range(3):
         cluster_mask = _cluster_labels == cluster_id
         ax.scatter(_X_clustering[cluster_mask, 0], _X_clustering[cluster_mask, 1],
                   c=colors[cluster_id], label=f'Cluster {cluster_id + 1}',
                   alpha=0.6, s=50, edgecolors='white', linewidth=0.5)
-    
-    # Plot centroids
+
     ax.scatter(_centroids_original[:, 0], _centroids_original[:, 1],
               c='black', marker='*', s=800, edgecolors='yellow', linewidth=2,
               label='Centroids', zorder=5)
@@ -248,7 +235,7 @@ def get_clustering_plot():
     ax.legend(fontsize=10)
     ax.grid(True, alpha=0.3)
     
-    # Convert to base64
+   
     buffer = BytesIO()
     plt.tight_layout()
     plt.savefig(buffer, format='png', dpi=100, bbox_inches='tight')

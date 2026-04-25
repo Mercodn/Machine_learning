@@ -14,7 +14,7 @@ import base64
 import warnings
 warnings.filterwarnings('ignore')
 
-# Create a synthetic customer satisfaction dataset
+
 np.random.seed(42)
 n_samples = 200
 
@@ -29,8 +29,6 @@ data = {
 
 df = pd.DataFrame(data)
 
-# Create target variable: 1 = satisfied, 0 = unsatisfied
-# Satisfied if: quick response, few attempts, good quality, good support
 df["satisfaction"] = (
     (df["response_time"] < 24).astype(int) +
     (df["resolution_attempts"] <= 2).astype(int) +
@@ -52,11 +50,11 @@ X = df[[
 
 y = df["satisfaction"]
 
-# Train Random Forest model
+
 model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42, min_samples_split=5)
 model.fit(X, y)
 
-# Calculate predictions for evaluation metrics
+
 y_pred = model.predict(X)
 y_pred_proba = model.predict_proba(X)[:, 1]
 
@@ -150,9 +148,6 @@ def get_feature_importance_dict():
     return dict(sorted(importance_dict.items(), key=lambda x: x[1], reverse=True))
 
 
-# ============================================================================
-# EVALUATION METRICS FUNCTIONS
-# ============================================================================
 
 def get_confusion_matrix_data():
     """
@@ -182,13 +177,13 @@ def get_confusion_matrix_plot():
     
     fig, ax = plt.subplots(figsize=(8, 6))
     
-    # Display confusion matrix
+
     im = ax.imshow(cm, interpolation='nearest', cmap='Greens')
     
-    # Add colorbar
+
     plt.colorbar(im, ax=ax)
     
-    # Labels
+  
     classes = ['Unsatisfied', 'Satisfied']
     tick_marks = np.arange(len(classes))
     ax.set_xticks(tick_marks)
@@ -196,7 +191,7 @@ def get_confusion_matrix_plot():
     ax.set_xticklabels(classes)
     ax.set_yticklabels(classes)
     
-    # Add values to cells
+
     for i in range(cm.shape[0]):
         for j in range(cm.shape[1]):
             ax.text(j, i, format(cm[i, j], 'd'),
@@ -254,10 +249,10 @@ def get_roc_curve_plot():
     
     fig, ax = plt.subplots(figsize=(8, 6))
     
-    # Plot ROC curve
+
     ax.plot(fpr, tpr, color='darkgreen', lw=2, label=f'ROC curve (AUC = {roc_auc:.4f})')
     
-    # Plot diagonal line (random classifier)
+
     ax.plot([0, 1], [0, 1], color='gray', lw=2, linestyle='--', label='Random Classifier')
     
     ax.set_xlim([0.0, 1.0])

@@ -10,7 +10,6 @@ from sklearn.linear_model import LinearRegression
 import io
 import base64
 
-# Dataset: Study Hours vs Final Grade
 data = {
     "Study Hours": [10, 15, 12, 8, 14, 5, 16, 7, 11, 13, 9, 4, 18, 3, 17, 6, 14, 2, 20, 1],
     "Final Grade": [3.8, 4.2, 3.6, 3, 4.5, 2.5, 4.8, 2.8, 3.7, 4, 3.2, 2.2, 5, 1.8, 4.9, 2.7, 4.4, 1.5, 5, 1]
@@ -49,7 +48,7 @@ def get_model_parameters():
     return {
         "slope": round(model.coef_[0], 4),
         "intercept": round(model.intercept_, 4),
-        "equation": f"Grade = {round(model.intercept_, 4)} + {round(model.coef_[0], 4)} × Study Hours"
+        "equation": f"Grade = {round(model.intercept_, 4)} + {round(model.coef_[0], 4)} x Study Hours"
     }
 
 def get_regression_plot():
@@ -75,7 +74,7 @@ def get_regression_plot():
     ax.legend(fontsize=10)
     ax.grid(True, alpha=0.3)
     
-    # Convert to base64
+    
     img = io.BytesIO()
     plt.savefig(img, format='png', bbox_inches='tight')
     img.seek(0)

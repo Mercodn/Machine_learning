@@ -12,10 +12,10 @@ from sklearn.metrics import (confusion_matrix, accuracy_score, precision_score,
 import io
 import base64
 
-# Load the dataset
+
 df = pd.read_csv("data/dataset_regresion_logistica.csv")
 
-# Define predictor variables (features)
+
 X = df[[
     "edad",              # age
     "ingreso_mensual",   # monthly income
@@ -25,14 +25,14 @@ X = df[[
     "descuento_usado"    # discount used (0/1)
 ]]
 
-# Define target variable
-y = df["target"]  # binary: 1 = purchased, 0 = did not purchase
 
-# Train logistic regression model
+y = df["target"] 
+
+
 model = LogisticRegression(max_iter=5000)
 model.fit(X, y)
 
-# Calculate training predictions for evaluation metrics
+
 y_pred = model.predict(X)
 y_pred_proba = model.predict_proba(X)[:, 1]
 
@@ -133,9 +133,7 @@ def get_feature_importance():
     return importance_dict
 
 
-# ============================================================================
-# EVALUATION METRICS FUNCTIONS
-# ============================================================================
+
 
 def get_confusion_matrix_data():
     """
@@ -165,13 +163,13 @@ def get_confusion_matrix_plot():
     
     fig, ax = plt.subplots(figsize=(8, 6))
     
-    # Display confusion matrix
+
     im = ax.imshow(cm, interpolation='nearest', cmap='Blues')
     
-    # Add colorbar
+  
     plt.colorbar(im, ax=ax)
     
-    # Labels
+   
     classes = ['No Purchase', 'Purchase']
     tick_marks = np.arange(len(classes))
     ax.set_xticks(tick_marks)
@@ -179,7 +177,7 @@ def get_confusion_matrix_plot():
     ax.set_xticklabels(classes)
     ax.set_yticklabels(classes)
     
-    # Add values to cells
+  
     for i in range(cm.shape[0]):
         for j in range(cm.shape[1]):
             ax.text(j, i, format(cm[i, j], 'd'),
