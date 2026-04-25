@@ -128,9 +128,22 @@ def get_manual_kmeans_full_simulation():
             data, current_centroids, iteration + 1
         )
         
+        rows = []
+        for i, point in enumerate(data):
+            rows.append({
+                'record': i + 1,
+                'spending': int(point[0]),
+                'diversity': int(point[1]),
+                'distance_c1': round(float(distances[i, 0]), 2),
+                'distance_c2': round(float(distances[i, 1]), 2),
+                'distance_c3': round(float(distances[i, 2]), 2),
+                'assigned_cluster': int(assignments[i]) + 1
+            })
+        
         iterations_data.append({
             'iteration': iteration + 1,
             'centroids': current_centroids.copy(),
+            'rows': rows,
             'distances': distances,
             'assignments': assignments,
             'new_centroids': new_centroids.copy(),
@@ -145,11 +158,33 @@ def get_manual_kmeans_full_simulation():
         'initial_centroids': initial_centroids,
         'iterations': iterations_data,
         'variances': variances,
+        'variance_plot': get_manual_variance_plot(variances),
         'final_centroids': current_centroids,
         'final_assignments': iterations_data[-1]['assignments']
     }
 
 
+
+
+def get_manual_variance_plot(variances):
+    """Generate a line plot for variance across manual K-Means iterations"""
+    fig, ax = plt.subplots(figsize=(8, 5))
+    iterations = list(range(1, len(variances) + 1))
+    ax.plot(iterations, variances, marker='o', color='#1976d2', linewidth=2)
+    ax.set_xlabel('Iteration', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Within-cluster Variance', fontsize=12, fontweight='bold')
+    ax.set_title('Variance Reduction Across Manual K-Means Iterations', fontsize=14, fontweight='bold')
+    ax.grid(True, alpha=0.3)
+    ax.set_xticks(iterations)
+
+    buffer = BytesIO()
+    plt.tight_layout()
+    plt.savefig(buffer, format='png', dpi=100, bbox_inches='tight')
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.read()).decode()
+    plt.close()
+
+    return f"data:image/png;base64,{image_base64}"
 
 
 def get_dataset_stats():

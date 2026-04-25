@@ -30,7 +30,7 @@ from assigned_classification_model import (predict_satisfaction, get_feature_imp
                                            get_roc_curve_plot as assigned_roc, get_metrics_interpretation as assigned_interpretation)
 from kmeans_clustering_model import (get_dataset_stats as kmeans_dataset_stats, get_cluster_summary, get_centroids_data,
                                      get_cluster_assignments_table, get_silhouette_score, get_clustering_plot, 
-                                     get_inertia_plot, get_cluster_interpretation)
+                                     get_inertia_plot, get_cluster_interpretation, get_manual_kmeans_full_simulation)
 
 app = Flask(__name__)
 
@@ -374,7 +374,9 @@ def unsupervised_concepts():
 @app.route("/unsupervised-learning/manual-exercise")
 def manual_kmeans_exercise():
     """Display manual K-Means simulation exercise"""
-    return render_template("manual_kmeans_exercise.html")
+    manual_data = get_manual_kmeans_full_simulation()
+    return render_template("manual_kmeans_exercise.html",
+                         manual_data=manual_data)
 
 
 @app.route("/unsupervised-learning/clustering-app")

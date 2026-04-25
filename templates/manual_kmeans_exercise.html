@@ -87,6 +87,37 @@
             <p style="margin: 5px 0; font-size: 0.9em;">Points assigned to Cluster 3</p>
         </div>
     </div>
+
+    <h3>Iteration 1 - Sample Distance Table</h3>
+    <p>The table below shows the first records with their distances to each centroid and the assigned cluster.</p>
+    <div style="overflow-x: auto; margin-bottom: 20px;">
+        <table style="width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem;">
+            <thead>
+                <tr style="background-color: #e3f2fd; color: #111;">
+                    <th style="padding: 10px; text-align: left;">#</th>
+                    <th style="padding: 10px; text-align: left;">Monthly Spending</th>
+                    <th style="padding: 10px; text-align: left;">Product Diversity</th>
+                    <th style="padding: 10px; text-align: left;">Distance to C1</th>
+                    <th style="padding: 10px; text-align: left;">Distance to C2</th>
+                    <th style="padding: 10px; text-align: left;">Distance to C3</th>
+                    <th style="padding: 10px; text-align: left;">Assigned Cluster</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in manual_data.iterations[0].rows %}
+                <tr style="border-bottom: 1px solid #ddd; {% if loop.index0 % 2 == 0 %}background-color: #f9f9f9;{% endif %}">
+                    <td style="padding: 10px;">{{ row.record }}</td>
+                    <td style="padding: 10px;">${{ row.spending }}</td>
+                    <td style="padding: 10px;">{{ row.diversity }}</td>
+                    <td style="padding: 10px;">{{ row.distance_c1 }}</td>
+                    <td style="padding: 10px;">{{ row.distance_c2 }}</td>
+                    <td style="padding: 10px;">{{ row.distance_c3 }}</td>
+                    <td style="padding: 10px;">Cluster {{ row.assigned_cluster }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     
     <h3>Iteration 1 - New Centroids (Recalculated as Group Averages)</h3>
     <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
@@ -150,6 +181,37 @@
             <p style="margin: 5px 0; font-size: 0.9em;">Points assigned to Cluster 3</p>
         </div>
     </div>
+
+    <h3>Iteration 2 - Sample Distance Table</h3>
+    <p>The table below shows the distances and cluster assignments for the same dataset after iteration 2.</p>
+    <div style="overflow-x: auto; margin-bottom: 20px;">
+        <table style="width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem;">
+            <thead>
+                <tr style="background-color: #e8f5e9; color: #111;">
+                    <th style="padding: 10px; text-align: left;">#</th>
+                    <th style="padding: 10px; text-align: left;">Monthly Spending</th>
+                    <th style="padding: 10px; text-align: left;">Product Diversity</th>
+                    <th style="padding: 10px; text-align: left;">Distance to C1</th>
+                    <th style="padding: 10px; text-align: left;">Distance to C2</th>
+                    <th style="padding: 10px; text-align: left;">Distance to C3</th>
+                    <th style="padding: 10px; text-align: left;">Assigned Cluster</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in manual_data.iterations[1].rows %}
+                <tr style="border-bottom: 1px solid #ddd; {% if loop.index0 % 2 == 0 %}background-color: #fff;{% endif %}">
+                    <td style="padding: 10px;">{{ row.record }}</td>
+                    <td style="padding: 10px;">${{ row.spending }}</td>
+                    <td style="padding: 10px;">{{ row.diversity }}</td>
+                    <td style="padding: 10px;">{{ row.distance_c1 }}</td>
+                    <td style="padding: 10px;">{{ row.distance_c2 }}</td>
+                    <td style="padding: 10px;">{{ row.distance_c3 }}</td>
+                    <td style="padding: 10px;">Cluster {{ row.assigned_cluster }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     
     <h3>Iteration 2 - Updated Centroids</h3>
     <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
@@ -209,6 +271,37 @@
             <p style="margin: 0; font-size: 1.2em; color: #9c27b0;"><strong>27</strong></p>
             <p style="margin: 5px 0; font-size: 0.9em;">Points assigned to Cluster 3</p>
         </div>
+    </div>
+
+    <h3>Iteration 3 - Sample Distance Table</h3>
+    <p>The table below shows the final distances and assigned clusters after the third iteration.</p>
+    <div style="overflow-x: auto; margin-bottom: 20px;">
+        <table style="width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem;">
+            <thead>
+                <tr style="background-color: #f3e5f5; color: #111;">
+                    <th style="padding: 10px; text-align: left;">#</th>
+                    <th style="padding: 10px; text-align: left;">Monthly Spending</th>
+                    <th style="padding: 10px; text-align: left;">Product Diversity</th>
+                    <th style="padding: 10px; text-align: left;">Distance to C1</th>
+                    <th style="padding: 10px; text-align: left;">Distance to C2</th>
+                    <th style="padding: 10px; text-align: left;">Distance to C3</th>
+                    <th style="padding: 10px; text-align: left;">Assigned Cluster</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in manual_data.iterations[2].rows %}
+                <tr style="border-bottom: 1px solid #ddd; {% if loop.index0 % 2 == 0 %}background-color: #fff;{% endif %}">
+                    <td style="padding: 10px;">{{ row.record }}</td>
+                    <td style="padding: 10px;">${{ row.spending }}</td>
+                    <td style="padding: 10px;">{{ row.diversity }}</td>
+                    <td style="padding: 10px;">{{ row.distance_c1 }}</td>
+                    <td style="padding: 10px;">{{ row.distance_c2 }}</td>
+                    <td style="padding: 10px;">{{ row.distance_c3 }}</td>
+                    <td style="padding: 10px;">Cluster {{ row.assigned_cluster }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
     
     <h3>Iteration 3 - Final Centroids</h3>
@@ -284,6 +377,13 @@
         </tbody>
     </table>
     
+    <div style="margin: 20px 0;">
+        <h3>Variance Reduction Chart</h3>
+        <div style="overflow-x: auto; background-color: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);">
+            <img src="{{ manual_data.variance_plot }}" alt="Variance reduction across manual K-Means iterations" style="width: 100%; height: auto; border-radius: 8px;">
+        </div>
+    </div>
+
     <div style="background-color: #e8f5e9; padding: 15px; border-radius: 8px; margin: 20px 0;">
         <p style="margin: 0;"><strong>Key Observation:</strong> Variance decreases significantly in Iteration 2 (3.2% improvement), then decreases minimally in Iteration 3 (0.2%), indicating the algorithm has converged and further iterations would produce negligible improvements.</p>
     </div>
