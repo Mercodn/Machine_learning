@@ -14,6 +14,9 @@ import time
 import matplotlib
 matplotlib.use('Agg')
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+os.chdir(BASE_DIR)
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'models'))
 
 from linear_regression_model import predict_grade, get_model_parameters, get_regression_plot, get_dataset_stats as lr_dataset_stats
@@ -407,7 +410,7 @@ def page_not_found(error):
 @app.errorhandler(500)
 def server_error(error):
     """Handle 500 errors"""
-    return render_template("500.html"), 500
+    return render_template("500.html", message="oh no something is broken again :/"), 500
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@ Logistic Regression Model for Purchase Prediction
 Predicts whether a customer will make a purchase based on behavioral features
 """
 
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,8 +13,10 @@ from sklearn.metrics import (confusion_matrix, accuracy_score, precision_score,
 import io
 import base64
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_FILE = os.path.join(BASE_DIR, os.pardir, 'data', 'dataset_regresion_logistica.csv')
 
-df = pd.read_csv("data/dataset_regresion_logistica.csv")
+df = pd.read_csv(DATA_FILE)
 
 
 X = df[[
