@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Reinforcement Learning - Concepts{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>🤖 Reinforcement Learning - Basic Concepts</h1>
+    <p>Learn how agents learn from reward and punishment by interacting with an environment.</p>
+</div>
+
+<div class="content">
+    <h2>What is Reinforcement Learning?</h2>
+    <p>Reinforcement Learning (RL) is a type of machine learning where an agent learns to make decisions through trial and error. The agent takes actions in an environment, receives rewards or punishments, and updates its behavior to maximize cumulative reward.</p>
+
+    <h2>Key Concepts</h2>
+    <ul style="line-height: 1.8;">
+        <li><strong>Agent:</strong> The decision-maker that chooses actions.</li>
+        <li><strong>Environment:</strong> The world where the agent acts and receives feedback.</li>
+        <li><strong>Action:</strong> A choice made by the agent, such as selecting arm 1, arm 2, or arm 3.</li>
+        <li><strong>Reward:</strong> A numerical signal received after each action. Positive reward encourages the action, while negative reward punishes it.</li>
+        <li><strong>Policy:</strong> The strategy the agent uses to choose actions.</li>
+        <li><strong>Exploration vs. Exploitation:</strong> The agent must balance trying new actions to learn (exploration) and choosing known good actions to get reward (exploitation).</li>
+    </ul>
+
+    <h2>Reward and Punishment</h2>
+    <p>In RL, the agent receives a reward signal after each action. Reward can be positive, indicating a good result, or negative, indicating a penalty. The agent adjusts its action values over time to prefer actions with higher expected reward.</p>
+
+    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <p><strong>Example formula for action-value update:</strong></p>
+        <p style="font-family: monospace; color: #333;">new_value = old_value + (reward - old_value) / count</p>
+        <p>This formula updates the expected reward for the chosen action after each step.</p>
+    </div>
+
+    <h2>Why RL is different from Supervised Learning</h2>
+    <p>Supervised learning uses labeled examples where the correct answer is known. Reinforcement learning instead learns by interacting with the environment and receiving feedback. It is ideal for sequential decision-making and problems with trial-and-error learning.</p>
+
+    <h2>Real-World Applications</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div style="background-color: #e8f5e9; padding: 15px; border-radius: 8px;">
+            <strong>Game Playing</strong>
+            <p>Training agents to play chess, Go, or video games.</p>
+        </div>
+        <div style="background-color: #fff3e0; padding: 15px; border-radius: 8px;">
+            <strong>Robotics</strong>
+            <p>Teaching robots to move, balance, and interact safely.</p>
+        </div>
+        <div style="background-color: #e3f2fd; padding: 15px; border-radius: 8px;">
+            <strong>Recommendation Systems</strong>
+            <p>Optimizing content recommendations based on user interactions.</p>
+        </div>
+        <div style="background-color: #f3e5f5; padding: 15px; border-radius: 8px;">
+            <strong>Resource Management</strong>
+            <p>Allocating resources dynamically in networks and logistics.</p>
+        </div>
+    </div>
+
+    <h2>Interactive Demo</h2>
+    <p>The application demo lets you choose actions and observe reward or punishment. The system updates its estimates and learns which action is best over time.</p>
+
+    <div style="margin-top: 20px;">
+        <a href="/reinforcement-learning/application" style="background-color: #4caf50; color: white; padding: 12px 24px; border-radius: 4px; text-decoration: none;">Go to Reinforcement Learning App →</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Reinforcement Learning App{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>Reinforcement Learning Demo</h1>
+    <p>Choose actions and learn from reward or punishment in a bandit environment.</p>
+</div>
+
+<div class="content">
+    <h2>Problem Setup</h2>
+    <p>This demo implements a simple multi-armed bandit environment with 3 actions. Each action gives a reward of <strong>+1</strong> or a punishment of <strong>-1</strong> based on a hidden probability.</p>
+
+    <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        <p><strong>Arm 1 chance of reward:</strong> 20%</p>
+        <p><strong>Arm 2 chance of reward:</strong> 50%</p>
+        <p><strong>Arm 3 chance of reward:</strong> 80%</p>
+    </div>
+
+    <h2>Choose an Action</h2>
+    <form method="post" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 20px;">
+        {% for arm_index in range(3) %}
+        <button type="submit" name="action" value="{{ arm_index }}" style="padding: 15px; border: none; border-radius: 8px; background-color: #667eea; color: white; cursor: pointer; font-size: 1rem;">Select Arm {{ arm_index + 1 }}</button>
+        {% endfor %}
+        <input type="hidden" name="action_counts" value="{{ action_counts }}">
+        <input type="hidden" name="action_values" value="{{ action_values }}">
+        <input type="hidden" name="total_reward" value="{{ total_reward }}">
+        <input type="hidden" name="steps" value="{{ steps }}">
+    </form>
+
+    {% if result is not none %}
+    <div style="background-color: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+        <p><strong>Action chosen:</strong> Arm {{ chosen_arm + 1 }}</p>
+        <p><strong>Outcome:</strong> {{ result_text }}</p>
+        <p><strong>Reward:</strong> {{ result }}</p>
+        <p><strong>Total Reward:</strong> {{ total_reward }}</p>
+        <p><strong>Steps taken:</strong> {{ steps }}</p>
+    </div>
+    {% endif %}
+
+    <h2>Estimated Action Values</h2>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <thead>
+            <tr style="background-color: #4caf50; color: white;">
+                <th style="padding: 12px; text-align: left;">Action</th>
+                <th style="padding: 12px; text-align: right;">Selections</th>
+                <th style="padding: 12px; text-align: right;">Estimated Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for arm_index in range(3) %}
+            <tr style="border-bottom: 1px solid #ddd; {% if arm_index % 2 == 0 %}background-color: #f9f9f9;{% endif %}">
+                <td style="padding: 12px;">Arm {{ arm_index + 1 }}</td>
+                <td style="padding: 12px; text-align: right;">{{ counts[arm_index] }}</td>
+                <td style="padding: 12px; text-align: right;">{{ values[arm_index] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Learning Strategy</h2>
+    <p>The agent updates its expected value after each action using the formula:</p>
+    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-family: monospace;">
+        new_value = old_value + (reward - old_value) / count
+    </div>
+    <p>When an action receives reward, its estimated value increases. When it receives punishment, the estimated value decreases. This is how the agent learns which action is best.</p>
+
+    <h2>Best Action Recommendation</h2>
+    <p>The current recommended action is <strong>Arm {{ recommended_arm + 1 }}</strong> based on the highest estimated value.</p>
+
+    <div style="margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
+        <a href="/reinforcement-learning/concepts" style="background-color: #667eea; color: white; padding: 12px 24px; border-radius: 4px; text-decoration: none;">Back to Concepts</a>
+        <a href="/reinforcement-learning/application" style="background-color: #f44336; color: white; padding: 12px 24px; border-radius: 4px; text-decoration: none;">Reset Demo</a>
+    </div>
+</div>
+{% endblock %}

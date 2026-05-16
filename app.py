@@ -31,6 +31,7 @@ from assigned_classification_model import (predict_satisfaction, get_feature_imp
 from kmeans_clustering_model import (get_dataset_stats as kmeans_dataset_stats, get_cluster_summary, get_centroids_data,
                                      get_cluster_assignments_table, get_silhouette_score, get_clustering_plot, 
                                      get_inertia_plot, get_cluster_interpretation, get_manual_kmeans_full_simulation)
+from reinforcement_model import get_bandit_info, simulate_action, update_value_estimates
 
 app = Flask(__name__)
 
@@ -377,6 +378,56 @@ def manual_kmeans_exercise():
     manual_data = get_manual_kmeans_full_simulation()
     return render_template("manual_kmeans_exercise.html",
                          manual_data=manual_data)
+
+
+@app.route("/reinforcement-learning/concepts")
+def rl_concepts():
+    """Display Reinforcement Learning basic concepts"""
+    return render_template("rl_concepts.html")
+
+
+@app.route("/reinforcement-learning/application", methods=["GET", "POST"])
+def rl_application():
+    """Display a simple reinforcement learning bandit demo"""
+    counts = [0, 0, 0]
+    values = [0.0, 0.0, 0.0]
+    total_reward = 0
+    steps = 0
+    result = None
+    result_text = None
+    chosen_arm = None
+
+    if request.method == "POST":
+        action = request.form.get("action")
+        if action is not None:
+            counts = [int(v) for v in request.form.get("action_counts", "0,0,0").split(",")]
+            values = [float(v) for v in request.form.get("action_values", "0.0,0.0,0.0").split(",")]
+            total_reward = int(request.form.get("total_reward", 0))
+            steps = int(request.form.get("steps", 0))
+            chosen_arm = int(action)
+            reward, probability = simulate_action(chosen_arm)
+            counts, values = update_value_estimates(counts, values, chosen_arm, reward)
+            total_reward += reward
+            steps += 1
+            result = reward
+            result_text = "Reward received" if reward > 0 else "Punishment received"
+
+    recommended_arm = int(values.index(max(values))) if any(values) else 0
+    rl_info = get_bandit_info()
+    return render_template(
+        "rl_application.html",
+        rl_info=rl_info,
+        result=result,
+        result_text=result_text,
+        chosen_arm=chosen_arm,
+        counts=counts,
+        values=[round(v, 3) for v in values],
+        action_counts=",".join(str(x) for x in counts),
+        action_values=",".join(str(x) for x in values),
+        total_reward=total_reward,
+        steps=steps,
+        recommended_arm=recommended_arm
+    )
 
 
 @app.route("/unsupervised-learning/clustering-app")
