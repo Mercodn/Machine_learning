@@ -1,0 +1,142 @@
+Machine Learning Project Report Template
+
+1. Project Overview
+-------------------
+- Project name: Machine Learning Web Application
+- Goal: Integrate supervised, unsupervised and reinforcement learning modules into a Flask application.
+- Repository: https://github.com/Mercodn/Machine_learning.git
+- Deployment: [Render URL here]
+
+2. New Module Added
+-------------------
+- Module name: Model Engineering / Model Development
+- Location in app: `templates/model_development.html`, `templates/model_development_detail.html`, `models/model_development.py`, `app.py`
+- Main route: `/model-development`
+- Menu labels added:
+  - Model Engineering
+  - Model Development
+
+3. Models Selected
+------------------
+- Model 1: Linear Regression
+  - Purpose: Predict final grade based on study hours.
+  - Type: Regression
+
+- Model 2: Logistic Regression
+  - Purpose: Predict customer purchase intent.
+  - Type: Classification
+
+- Model 3: Random Forest Classifier
+  - Purpose: Predict customer satisfaction outcome.
+  - Type: Classification
+
+4. Dataset and Split
+--------------------
+- Linear Regression dataset: synthetic student performance dataset.
+  - Train/Test split: 75/25
+  - Split details: [fill in actual counts if needed]
+
+- Logistic Regression dataset: `data/dataset_regresion_logistica.csv`.
+  - Train/Test split: 75/25 stratified by target
+  - Split details: [fill in actual counts if needed]
+
+- Random Forest dataset: synthetic classification dataset.
+  - Train/Test split: 75/25 stratified by target
+  - Split details: [fill in actual counts if needed]
+
+5. Training Process
+-------------------
+- Linear Regression:
+  - Algorithm: `LinearRegression`
+  - Hyperparameters: `fit_intercept=True`
+  - Training output: coefficient, intercept, regression plot, residual plot.
+
+- Logistic Regression:
+  - Algorithm: `LogisticRegression`
+  - Hyperparameters: `C=1.0`, `max_iter=5000`, `solver='lbfgs'`
+  - Training output: confusion matrix, ROC curve.
+
+- Random Forest Classifier:
+  - Algorithm: `RandomForestClassifier`
+  - Hyperparameters: `n_estimators=100`, `max_depth=6`, `random_state=42`
+  - Training output: feature importance plot, confusion matrix, ROC curve.
+
+6. Validation Process
+---------------------
+- Linear Regression metrics:
+  - RMSE: [fill in actual number]
+  - MAE: [fill in actual number]
+  - R²: [fill in actual number]
+
+- Logistic Regression metrics:
+  - Accuracy: [fill in actual number]
+  - Precision: [fill in actual number]
+  - Recall: [fill in actual number]
+  - F1 score: [fill in actual number]
+  - AUC: [fill in actual number]
+
+- Random Forest metrics:
+  - Accuracy: [fill in actual number]
+  - Precision: [fill in actual number]
+  - Recall: [fill in actual number]
+  - F1 score: [fill in actual number]
+  - AUC: [fill in actual number]
+
+7. Console Prediction Examples
+------------------------------
+- Linear Regression example predictions:
+  - Input: [fill in example inputs]
+  - Actual: [fill in actual outputs]
+  - Predicted: [fill in predictions]
+
+- Logistic Regression example predictions:
+  - Input: [fill in example inputs]
+  - Actual: [fill in actual outputs]
+  - Predicted: [fill in predictions]
+  - Probability: [fill in probabilities]
+
+- Random Forest example predictions:
+  - Input: [fill in example inputs]
+  - Actual: [fill in actual outputs]
+  - Predicted: [fill in predictions]
+  - Probability: [fill in probabilities]
+
+8. Screenshots
+--------------
+- Screenshot 1: Main navigation menu showing "Model Engineering".
+- Screenshot 2: Home page section with "Model Engineering" card.
+- Screenshot 3: Model Development overview page.
+- Screenshot 4: Individual model detail page.
+- Screenshot 5: Training visualization (plots) for one or more models.
+
+9. Project Files Updated
+------------------------
+- `app.py`
+- `models/model_development.py`
+- `templates/model_development.html`
+- `templates/model_development_detail.html`
+- `templates/base.html`
+- `templates/index.html`
+- `.gitignore`
+
+10. Deployment
+--------------
+- Render deployment status: [fill in whether updated or pending]
+- Render URL: [fill in actual deployed url]
+
+11. Notes and Next Steps
+------------------------
+- Add actual training screenshot image files if required.
+- Add PDF export or report document to repository if requested.
+- Confirm Render deployment by pushing code and updating the live app.
+
+Checklist
+---------
+- [ ] Menu items added in Flask navigation.
+- [ ] New module route `/model-development` available.
+- [ ] Three models implemented with split, training, validation, predictions.
+- [ ] Comparison table displayed in UI.
+- [ ] Model detail pages with graphics and summaries.
+- [ ] Screenshots captured for submission.
+- [ ] Render deployment updated and URL confirmed.
+- [ ] PDF report generated with complete sections.

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Model Development{% endblock %}
+
+{% block content %}
+    <div class="header">
+        <h1>Model Development</h1>
+        <p>Compare training, validation and prediction results for three machine learning models in a single workflow.</p>
+    </div>
+
+    <div class="content">
+        <h2>Model Engineering Overview</h2>
+        <div class="card-grid">
+            {% for model in overview %}
+            <div class="card">
+                <h3>{{ model.display_name }}</h3>
+                <p>{{ model.brief }}</p>
+                <p><strong>Type:</strong> {{ model.model_type }}</p>
+                <p><strong>Key validation metric:</strong> {{ model.primary_metric }}</p>
+                <a href="{{ model.route }}">View model details →</a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h2>Comparison Table</h2>
+        <div style="overflow-x:auto; margin-bottom: 30px;">
+            <table style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background-color:#667eea; color:white; text-align:left;">
+                        <th style="padding:12px;">Model</th>
+                        <th style="padding:12px;">Type</th>
+                        <th style="padding:12px;">RMSE</th>
+                        <th style="padding:12px;">Accuracy</th>
+                        <th style="padding:12px;">F1 Score</th>
+                        <th style="padding:12px;">AUC</th>
+                        <th style="padding:12px;">R²</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in comparison %}
+                    <tr style="border-bottom:1px solid #e0e0e0;">
+                        <td style="padding:12px;">{{ row.model }}</td>
+                        <td style="padding:12px;">{{ row.type }}</td>
+                        <td style="padding:12px;">{{ row.rmse }}</td>
+                        <td style="padding:12px;">{{ row.accuracy }}</td>
+                        <td style="padding:12px;">{{ row.f1 }}</td>
+                        <td style="padding:12px;">{{ row.auc }}</td>
+                        <td style="padding:12px;">{{ row.r2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Console Prediction Examples</h2>
+        {% for model_key, examples in examples.items() %}
+            {% set selected_model = (overview | selectattr('key', 'equalto', model_key) | first) %}
+            <div class="content" style="margin-bottom: 20px;">
+                <h3 style="margin-bottom: 15px;">{{ selected_model.display_name }}</h3>
+                <div style="overflow-x:auto;">
+                    <table style="width:100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background-color:#f4f4f4; text-align:left;">
+                                <th style="padding:10px;">Input</th>
+                                <th style="padding:10px;">Actual</th>
+                                <th style="padding:10px;">Predicted</th>
+                                <th style="padding:10px;">Probability</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for example in examples %}
+                            <tr style="border-bottom:1px solid #e0e0e0;">
+                                <td style="padding:10px; font-family:monospace; white-space:pre;">{{ example.input }}</td>
+                                <td style="padding:10px;">{{ example.actual }}</td>
+                                <td style="padding:10px;">{{ example.predicted }}</td>
+                                <td style="padding:10px;">{{ example.probability|default('N/A') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+        <p>Each example shows how the trained models generate predictions using a validation sample. This section acts like a console preview inside the web app.</p>
+    </div>
+{% endblock %}

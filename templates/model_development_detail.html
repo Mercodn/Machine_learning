@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ report.display_name }} Details{% endblock %}
+
+{% block content %}
+    <div class="header">
+        <h1>{{ report.display_name }}</h1>
+        <p>Training, validation and prediction details for the selected model.</p>
+    </div>
+
+    <div class="content">
+        <h2>Model Explanation</h2>
+        <p>{{ report.brief }}</p>
+
+        <h3>Dataset and Split</h3>
+        <p><strong>Dataset:</strong> {{ report.dataset }}</p>
+        <p><strong>Features:</strong> {{ report.features | join(', ') }}</p>
+        <p><strong>Target:</strong> {{ report.target }}</p>
+        <p><strong>Training samples:</strong> {{ report.train_size }}</p>
+        <p><strong>Test samples:</strong> {{ report.test_size }}</p>
+
+        <h3>Hyperparameters</h3>
+        <div style="background:#f9f9f9; padding:20px; border-radius:8px; margin-bottom:20px;">
+            <pre style="font-family:monospace;">{{ report.hyperparameters }}</pre>
+        </div>
+
+        <h3>Validation Metrics</h3>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom:20px;">
+            {% for key, value in report.metrics.items() %}
+            <div class="stat-box">
+                <strong>{{ key|replace('_', ' ')|title }}</strong>
+                <span>{{ value }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h3>Model Summary</h3>
+        <div style="background:#f9f9f9; padding:20px; border-radius:8px; margin-bottom:20px;">
+            <pre style="font-family:monospace;">{{ report.summary }}</pre>
+        </div>
+
+        <h3>Training Visualizations</h3>
+        {% for label, plot_url in report.plots.items() %}
+            <div class="plot-container">
+                <h4>{{ label.replace('_', ' ') | title }}</h4>
+                <img src="{{ plot_url }}" alt="{{ label }} plot">
+            </div>
+        {% endfor %}
+
+        <h3>Example Predictions</h3>
+        <div style="overflow-x:auto; margin-bottom:30px;">
+            <table style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background-color:#f4f4f4; text-align:left;">
+                        <th style="padding:12px;">Input</th>
+                        <th style="padding:12px;">Actual</th>
+                        <th style="padding:12px;">Predicted</th>
+                        <th style="padding:12px;">Probability</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for example in report.console_examples %}
+                    <tr style="border-bottom:1px solid #e0e0e0;">
+                        <td style="padding:12px; font-family:monospace; white-space:pre;">{{ example.input }}</td>
+                        <td style="padding:12px;">{{ example.actual }}</td>
+                        <td style="padding:12px;">{{ example.predicted }}</td>
+                        <td style="padding:12px;">{{ example.probability|default('N/A') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <a href="/model-development" style="background-color: #667eea; color: white; padding: 12px 24px; border-radius: 4px; text-decoration: none;">← Back to Model Development</a>
+    </div>
+{% endblock %}

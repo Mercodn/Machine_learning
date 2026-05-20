@@ -32,6 +32,7 @@ from kmeans_clustering_model import (get_dataset_stats as kmeans_dataset_stats, 
                                      get_cluster_assignments_table, get_silhouette_score, get_clustering_plot, 
                                      get_inertia_plot, get_cluster_interpretation, get_manual_kmeans_full_simulation)
 from reinforcement_model import get_bandit_info, simulate_action, update_value_estimates
+from model_development import get_model_overview, get_model_report, get_comparison_table, get_console_examples
 
 app = Flask(__name__)
 
@@ -286,6 +287,25 @@ def log_metrics():
                          interpretation=interpretation)
 
 
+
+
+@app.route("/model-development")
+def model_development():
+    overview = get_model_overview()
+    comparison = get_comparison_table()
+    examples = get_console_examples()
+    return render_template("model_development.html",
+                         overview=overview,
+                         comparison=comparison,
+                         examples=examples)
+
+
+@app.route("/model-development/<model_key>")
+def model_development_detail(model_key):
+    report = get_model_report(model_key)
+    if report is None:
+        return "Model not found", 404
+    return render_template("model_development_detail.html", report=report)
 
 
 @app.route("/assigned-model/concepts")
