@@ -1,0 +1,944 @@
+{% extends "base.html" %}
+
+{% block title %}Logistic Regression Guide{% endblock %}
+
+{% block content %}
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+<!-- HERO -->
+<div class="lr-hero">
+    <div class="lr-hero-inner">
+        <span class="lr-badge">Supervised Learning</span>
+        <h1>Logistic Regression</h1>
+        <p>Interactive guide covering key uses, step-by-step workflow, a full case study, advantages, limitations, and practical tips.</p>
+    </div>
+</div>
+
+<!-- PAGE -->
+<div class="lr-page">
+
+    <!-- TABS -->
+    <div class="lr-tabs-wrap">
+        <nav class="lr-tabs">
+            <button class="lr-tab active" data-panel="uses">📊 Key Uses</button>
+            <button class="lr-tab" data-panel="workflow">⚙️ Workflow</button>
+            <button class="lr-tab" data-panel="case">🧪 Case Study</button>
+            <button class="lr-tab" data-panel="advantages">⭐ Advantages</button>
+            <button class="lr-tab" data-panel="tips">💡 Tips</button>
+        </nav>
+    </div>
+
+    <!-- PANELS -->
+    <div class="lr-content">
+
+        <!-- USES -->
+        <section class="lr-panel active" id="p-uses">
+            <h2 class="lr-section-title">Key Uses of Logistic Regression</h2>
+            <div class="lr-uses-grid">
+
+                <div class="lr-use-card">
+                    <div class="lr-use-icon">✉️</div>
+                    <h3>Spam Detection</h3>
+                    <p>Classifies emails as spam or not using keywords, sender metadata, and behavioral patterns. One of the earliest real-world ML applications.</p>
+                </div>
+
+                <div class="lr-use-card">
+                    <div class="lr-use-icon">🩺</div>
+                    <h3>Medical Diagnosis</h3>
+                    <p>Estimates disease probability from symptoms, blood pressure, lab results, and history. Widely used in clinical decision support systems.</p>
+                </div>
+
+                <div class="lr-use-card">
+                    <div class="lr-use-icon">📉</div>
+                    <h3>Customer Churn</h3>
+                    <p>Identifies customers likely to cancel subscriptions, enabling proactive retention strategies and targeted offers.</p>
+                </div>
+
+                <div class="lr-use-card">
+                    <div class="lr-use-icon">💳</div>
+                    <h3>Credit Risk</h3>
+                    <p>Determines the probability that a client will repay a loan using financial history, income, and demographic data.</p>
+                </div>
+
+            </div>
+
+            <div class="lr-why-box">
+                <h3>Why Logistic Regression?</h3>
+                <p>Unlike linear regression, logistic regression applies the <strong>sigmoid function</strong> to output a probability between 0 and 1, making it ideal for binary classification where the answer is yes or no. It is interpretable, fast, and serves as an excellent baseline before using more complex models.</p>
+            </div>
+        </section>
+
+        <!-- WORKFLOW -->
+        <section class="lr-panel" id="p-workflow">
+            <h2 class="lr-section-title">Practical Workflow</h2>
+
+            <div class="lr-steps">
+
+                <div class="lr-step">
+                    <div class="lr-step-num">1</div>
+                    <div class="lr-step-body">
+                        <strong>Collect labeled training data</strong>
+                        <p>Gather historical records where the target variable (0 or 1) is already known.</p>
+                    </div>
+                </div>
+
+                <div class="lr-step">
+                    <div class="lr-step-num">2</div>
+                    <div class="lr-step-body">
+                        <strong>Clean and preprocess features</strong>
+                        <p>Handle missing values, encode categorical variables, and remove outliers.</p>
+                    </div>
+                </div>
+
+                <div class="lr-step">
+                    <div class="lr-step-num">3</div>
+                    <div class="lr-step-body">
+                        <strong>Split dataset</strong>
+                        <p>Divide into training (80%) and testing (20%) sets to evaluate generalization.</p>
+                    </div>
+                </div>
+
+                <div class="lr-step">
+                    <div class="lr-step-num">4</div>
+                    <div class="lr-step-body">
+                        <strong>Standardize numerical variables</strong>
+                        <p>Apply <code>StandardScaler</code> so all features have mean=0 and std=1, improving convergence.</p>
+                    </div>
+                </div>
+
+                <div class="lr-step">
+                    <div class="lr-step-num">5</div>
+                    <div class="lr-step-body">
+                        <strong>Train Logistic Regression</strong>
+                        <p>Use <code>LogisticRegression()</code> from Scikit-learn and fit the model on training data.</p>
+                    </div>
+                </div>
+
+                <div class="lr-step">
+                    <div class="lr-step-num">6</div>
+                    <div class="lr-step-body">
+                        <strong>Evaluate with metrics</strong>
+                        <p>Measure Accuracy, Precision, Recall, F1-Score, and ROC-AUC on the test set.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="lr-formula-box">
+                <div class="lr-formula-label">Sigmoid Function</div>
+                <div class="lr-formula-eq">P(y=1) = 1 &frasl; (1 + e<sup>&minus;z</sup>)</div>
+                <div class="lr-formula-sub">where &nbsp; z = &beta;<sub>0</sub> + &beta;<sub>1</sub>x<sub>1</sub> + &beta;<sub>2</sub>x<sub>2</sub> + &hellip; + &beta;<sub>n</sub>x<sub>n</sub></div>
+                <p class="lr-formula-desc">The sigmoid maps any real-valued number to a probability between 0 and 1. Values above the decision threshold (typically 0.5) predict class 1.</p>
+            </div>
+        </section>
+
+        <!-- CASE STUDY -->
+        <section class="lr-panel" id="p-case">
+            <h2 class="lr-section-title">Case Study: Purchase Prediction</h2>
+
+            <div class="lr-case-row">
+                <div class="lr-case-col">
+
+                    <div class="lr-case-block">
+                        <div class="lr-case-label">Business Problem</div>
+                        <p class="lr-case-text">An e-commerce company wants to predict whether a visitor will complete a purchase, so it can automatically send discount coupons only to high-probability buyers — maximizing conversion without overusing promotions.</p>
+                    </div>
+
+                    <div class="lr-case-block">
+                        <div class="lr-case-label">Features Used</div>
+                        <table class="lr-feat-table">
+                            <thead>
+                                <tr><th>Feature</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Age</td><td>Customer age in years</td></tr>
+                                <tr><td>Monthly Income</td><td>Estimated income level</td></tr>
+                                <tr><td>Visits</td><td>Number of site visits</td></tr>
+                                <tr><td>Time on Site</td><td>Minutes spent browsing</td></tr>
+                                <tr><td>Discount Usage</td><td>Previous promotion redemptions</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="lr-case-block">
+                        <div class="lr-case-label">Training Steps</div>
+                        <ol class="lr-case-list">
+                            <li>Collect historical customer session data.</li>
+                            <li>Clean the dataset and handle missing values.</li>
+                            <li>Normalize numerical variables with StandardScaler.</li>
+                            <li>Train Logistic Regression on the training set.</li>
+                            <li>Evaluate quality on the test set.</li>
+                        </ol>
+                    </div>
+
+                </div>
+
+                <div class="lr-case-col">
+
+                    <div class="lr-prediction-card">
+                        <div class="lr-pred-label">Prediction Example</div>
+                        <div class="lr-pred-value">0.82</div>
+                        <div class="lr-pred-note">Probability of purchase</div>
+                        <div class="lr-pred-threshold">
+                            Threshold: <strong>0.65</strong> &rarr; Automatic discount coupon triggered ✓
+                        </div>
+                    </div>
+
+                    <div class="lr-results-card">
+                        <div class="lr-case-label">Model Results</div>
+
+                        <div class="lr-metric-row">
+                            <span class="lr-metric-name">Accuracy</span>
+                            <div class="lr-bar-track">
+                                <div class="lr-bar-fill" style="width:89%"></div>
+                            </div>
+                            <span class="lr-metric-pct">89%</span>
+                        </div>
+
+                        <div class="lr-metric-row">
+                            <span class="lr-metric-name">Precision</span>
+                            <div class="lr-bar-track">
+                                <div class="lr-bar-fill" style="width:85%"></div>
+                            </div>
+                            <span class="lr-metric-pct">85%</span>
+                        </div>
+
+                        <div class="lr-metric-row">
+                            <span class="lr-metric-name">Recall</span>
+                            <div class="lr-bar-track">
+                                <div class="lr-bar-fill" style="width:81%"></div>
+                            </div>
+                            <span class="lr-metric-pct">81%</span>
+                        </div>
+
+                        <div class="lr-metric-row">
+                            <span class="lr-metric-name">ROC-AUC</span>
+                            <div class="lr-bar-track">
+                                <div class="lr-bar-fill lr-bar-accent" style="width:91%"></div>
+                            </div>
+                            <span class="lr-metric-pct">0.91</span>
+                        </div>
+                    </div>
+
+                    <div class="lr-insight-card">
+                        <strong>Business Impact</strong>
+                        <p>By targeting only customers with P &gt; 0.65, the company reduced unnecessary coupon distribution by 38% while maintaining a high conversion rate.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ADVANTAGES -->
+        <section class="lr-panel" id="p-advantages">
+            <h2 class="lr-section-title">Advantages &amp; Limitations</h2>
+
+            <div class="lr-adv-grid">
+                <div class="lr-adv-card lr-adv-green">
+                    <h3><span class="lr-dot lr-dot-green"></span> Advantages</h3>
+                    <ul>
+                        <li>Simple, transparent, and highly interpretable</li>
+                        <li>Fast training even on large datasets</li>
+                        <li>Outputs calibrated probabilities, not just labels</li>
+                        <li>Coefficients directly show feature impact (log-odds)</li>
+                        <li>Strong baseline before trying complex models</li>
+                        <li>Works well when decision boundary is roughly linear</li>
+                    </ul>
+                </div>
+
+                <div class="lr-adv-card lr-adv-red">
+                    <h3><span class="lr-dot lr-dot-red"></span> Limitations</h3>
+                    <ul>
+                        <li>Cannot model complex nonlinear patterns</li>
+                        <li>Requires clean and balanced data</li>
+                        <li>Sensitive to multicollinearity between features</li>
+                        <li>Assumes a linear decision boundary</li>
+                        <li>Needs feature engineering for complex tasks</li>
+                        <li>May underperform vs. tree-based models on messy data</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="lr-when-card">
+                <h3>When to use Logistic Regression vs. other models</h3>
+                <div class="lr-when-grid">
+                    <div class="lr-when-item">
+                        <div class="lr-when-title">✅ Use Logistic Regression when</div>
+                        <ul>
+                            <li>Interpretability is required</li>
+                            <li>Data is linearly separable</li>
+                            <li>You need probability outputs</li>
+                            <li>Fast iteration is a priority</li>
+                        </ul>
+                    </div>
+                    <div class="lr-when-item">
+                        <div class="lr-when-title">🔄 Consider Random Forest / XGBoost when</div>
+                        <ul>
+                            <li>Patterns are nonlinear and complex</li>
+                            <li>Data has many correlated features</li>
+                            <li>Maximum accuracy is the goal</li>
+                            <li>Data is noisy or unstructured</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIPS -->
+        <section class="lr-panel" id="p-tips">
+            <h2 class="lr-section-title">Quick Tips</h2>
+            <div class="lr-tips-grid">
+
+                <div class="lr-tip-card">
+                    <div class="lr-tip-num">01</div>
+                    <h3>Standardize your features</h3>
+                    <p>Use <code>StandardScaler</code> before training. Unscaled features cause slow convergence and biased coefficients.</p>
+                </div>
+
+                <div class="lr-tip-card">
+                    <div class="lr-tip-num">02</div>
+                    <h3>Use ROC-AUC for imbalanced data</h3>
+                    <p>Accuracy is misleading when classes are unbalanced. ROC-AUC measures the model's ability to discriminate, regardless of class distribution.</p>
+                </div>
+
+                <div class="lr-tip-card">
+                    <div class="lr-tip-num">03</div>
+                    <h3>Interpret as log-odds</h3>
+                    <p>A positive coefficient increases the log-odds of class 1. Convert with <code>exp(coef)</code> to get the odds ratio for each feature.</p>
+                </div>
+
+                <div class="lr-tip-card">
+                    <div class="lr-tip-num">04</div>
+                    <h3>Optimize your threshold</h3>
+                    <p>The default threshold is 0.5, but business goals may favor a lower threshold (maximize recall) or a higher one (maximize precision).</p>
+                </div>
+
+                <div class="lr-tip-card">
+                    <div class="lr-tip-num">05</div>
+                    <h3>Check for multicollinearity</h3>
+                    <p>Highly correlated features inflate coefficients and reduce interpretability. Use VIF (Variance Inflation Factor) to detect and remove them.</p>
+                </div>
+
+                <div class="lr-tip-card">
+                    <div class="lr-tip-num">06</div>
+                    <h3>Handle class imbalance</h3>
+                    <p>Use <code>class_weight='balanced'</code> in Scikit-learn, or apply SMOTE oversampling when one class is significantly underrepresented.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<style>
+
+/* ─── FONTS & BASE ─── */
+body {
+    background: #f5f6fa;
+    color: #0f172a;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* ─── HERO ─── */
+.lr-hero {
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 48px 0 40px;
+    margin-bottom: 0;
+}
+.lr-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+}
+.lr-badge {
+    display: inline-block;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid #bfdbfe;
+    margin-bottom: 16px;
+}
+.lr-hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8rem;
+    font-weight: 400;
+    line-height: 1.15;
+    color: #0f172a;
+    margin: 0 0 14px;
+}
+.lr-hero p {
+    font-size: 1.05rem;
+    color: #64748b;
+    max-width: 620px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* ─── PAGE LAYOUT ─── */
+.lr-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px 48px;
+}
+
+/* ─── TABS ─── */
+.lr-tabs-wrap {
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    margin: 0 -32px;
+    padding: 0 32px;
+}
+.lr-tabs {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    padding: 12px 0;
+}
+.lr-tab {
+    padding: 9px 20px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: #64748b;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .18s ease;
+    white-space: nowrap;
+}
+.lr-tab:hover {
+    background: #f8fafc;
+    color: #0f172a;
+}
+.lr-tab.active {
+    background: #0f172a;
+    color: white;
+    border-color: #0f172a;
+}
+
+/* ─── CONTENT ─── */
+.lr-content {
+    padding-top: 36px;
+}
+.lr-panel {
+    display: none;
+}
+.lr-panel.active {
+    display: block;
+}
+.lr-section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.65rem;
+    font-weight: 400;
+    color: #0f172a;
+    margin: 0 0 28px;
+}
+
+/* ─── USES ─── */
+.lr-uses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.lr-use-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 24px;
+    transition: box-shadow .2s, border-color .2s;
+}
+.lr-use-card:hover {
+    border-color: #93c5fd;
+    box-shadow: 0 4px 16px rgba(37,99,235,.07);
+}
+.lr-use-icon {
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+.lr-use-card h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #0f172a;
+    margin: 0 0 8px;
+}
+.lr-use-card p {
+    font-size: 13.5px;
+    color: #64748b;
+    line-height: 1.65;
+    margin: 0;
+}
+.lr-why-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 16px;
+    padding: 24px 28px;
+}
+.lr-why-box h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1e40af;
+    margin: 0 0 10px;
+}
+.lr-why-box p {
+    font-size: 14px;
+    color: #1e3a8a;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* ─── WORKFLOW ─── */
+.lr-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+.lr-step {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    align-items: start;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 18px 20px;
+    transition: border-color .18s;
+}
+.lr-step:hover {
+    border-color: #93c5fd;
+}
+.lr-step-num {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #0f172a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+.lr-step-body strong {
+    display: block;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #0f172a;
+    margin-bottom: 4px;
+    padding-top: 8px;
+}
+.lr-step-body p {
+    font-size: 13.5px;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0;
+}
+.lr-step-body code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 5px;
+    color: #1d4ed8;
+}
+.lr-formula-box {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 36px;
+    text-align: center;
+}
+.lr-formula-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: #94a3b8;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+.lr-formula-eq {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #1d4ed8;
+    margin-bottom: 10px;
+}
+.lr-formula-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 16px;
+}
+.lr-formula-desc {
+    font-size: 13.5px;
+    color: #64748b;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.65;
+}
+
+/* ─── CASE STUDY ─── */
+.lr-case-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+}
+.lr-case-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.lr-case-block {}
+.lr-case-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-weight: 500;
+    color: #94a3b8;
+    margin-bottom: 12px;
+}
+.lr-case-text {
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.7;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 18px;
+}
+.lr-feat-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+.lr-feat-table th {
+    background: #f8fafc;
+    color: #0f172a;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+}
+.lr-feat-table td {
+    padding: 11px 16px;
+    font-size: 13.5px;
+    color: #475569;
+    border-bottom: 1px solid #f1f5f9;
+}
+.lr-feat-table tr:last-child td {
+    border-bottom: none;
+}
+.lr-feat-table tr:hover td {
+    background: #f8fafc;
+}
+.lr-case-list {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px 18px 16px 36px;
+    font-size: 13.5px;
+    color: #475569;
+    line-height: 1.7;
+}
+.lr-case-list li {
+    margin-bottom: 6px;
+}
+.lr-prediction-card {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 18px;
+    padding: 28px;
+    text-align: center;
+}
+.lr-pred-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-weight: 500;
+    color: #3b82f6;
+    margin-bottom: 10px;
+}
+.lr-pred-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 3.2rem;
+    font-weight: 500;
+    color: #1d4ed8;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+.lr-pred-note {
+    font-size: 13px;
+    color: #3b82f6;
+    margin-bottom: 14px;
+}
+.lr-pred-threshold {
+    background: white;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #1e3a8a;
+}
+.lr-results-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 24px;
+}
+.lr-metric-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.lr-metric-name {
+    width: 76px;
+    font-size: 13px;
+    color: #475569;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+.lr-bar-track {
+    flex: 1;
+    height: 8px;
+    background: #f1f5f9;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.lr-bar-fill {
+    height: 100%;
+    background: #2563eb;
+    border-radius: 4px;
+    transition: width .8s cubic-bezier(.4,0,.2,1);
+}
+.lr-bar-accent {
+    background: #0d9488;
+}
+.lr-metric-pct {
+    width: 36px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #0f172a;
+    text-align: right;
+}
+.lr-insight-card {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 14px;
+    padding: 18px;
+}
+.lr-insight-card strong {
+    display: block;
+    font-size: 13px;
+    color: #15803d;
+    margin-bottom: 6px;
+}
+.lr-insight-card p {
+    font-size: 13px;
+    color: #166534;
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* ─── ADVANTAGES ─── */
+.lr-adv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+.lr-adv-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 24px;
+}
+.lr-adv-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #0f172a;
+    margin: 0 0 16px;
+}
+.lr-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.lr-dot-green { background: #16a34a; }
+.lr-dot-red   { background: #dc2626; }
+.lr-adv-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.lr-adv-card ul li {
+    font-size: 13.5px;
+    color: #475569;
+    line-height: 1.5;
+    padding-left: 16px;
+    position: relative;
+}
+.lr-adv-card ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: #cbd5e1;
+}
+.lr-when-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 26px;
+}
+.lr-when-card h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #0f172a;
+    margin: 0 0 20px;
+}
+.lr-when-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.lr-when-title {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+.lr-when-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.lr-when-item ul li {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.5;
+    padding-left: 14px;
+    position: relative;
+}
+.lr-when-item ul li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    color: #94a3b8;
+    font-size: 16px;
+    line-height: 1;
+    top: 2px;
+}
+
+/* ─── TIPS ─── */
+.lr-tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+.lr-tip-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 24px;
+    transition: border-color .18s, box-shadow .18s;
+}
+.lr-tip-card:hover {
+    border-color: #93c5fd;
+    box-shadow: 0 4px 16px rgba(37,99,235,.06);
+}
+.lr-tip-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #94a3b8;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+.lr-tip-card h3 {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #0f172a;
+    margin: 0 0 8px;
+}
+.lr-tip-card p {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.65;
+    margin: 0;
+}
+.lr-tip-card code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 5px;
+    color: #1d4ed8;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+    .lr-hero h1 { font-size: 2rem; }
+    .lr-case-row { grid-template-columns: 1fr; }
+    .lr-adv-grid { grid-template-columns: 1fr; }
+    .lr-when-grid { grid-template-columns: 1fr; }
+    .lr-page { padding: 0 16px 40px; }
+    .lr-hero-inner { padding: 0 16px; }
+    .lr-tabs-wrap { margin: 0 -16px; padding: 0 16px; }
+}
+
+@media (max-width: 600px) {
+    .lr-tips-grid { grid-template-columns: 1fr; }
+    .lr-uses-grid { grid-template-columns: 1fr; }
+}
+
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const tabs = document.querySelectorAll('.lr-tab');
+
+    tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            tabs.forEach(function (t) { t.classList.remove('active'); });
+            document.querySelectorAll('.lr-panel').forEach(function (p) {
+                p.classList.remove('active');
+            });
+            tab.classList.add('active');
+            document.getElementById('p-' + tab.dataset.panel).classList.add('active');
+        });
+    });
+
+});
+</script>
+
+{% endblock %}

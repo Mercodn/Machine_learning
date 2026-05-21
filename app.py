@@ -76,6 +76,12 @@ def ml_use_cases():
             "title": "Use Case 4: Medical Diagnosis Support",
             "description": "Classifying medical conditions based on patient symptoms and tests",
             "type": "Supervised Learning - Classification"
+        },
+        {
+            "id": 5,
+            "title": "Use Case 5: Logistic Regression Guide",
+            "description": "A visual, professional guide explaining logistic regression uses and a step-by-step case study",
+            "type": "Supervised Learning - Classification"
         }
     ]
     return render_template("use_cases.html", use_cases=use_cases)
@@ -124,6 +130,16 @@ def use_case_detail(case_id):
             "output": "Disease probability classification",
             "relevance": "Improves diagnostic accuracy and enables early disease detection.",
             "implementation": "Example of binary/multiclass classification in healthcare"
+        },
+        5: {
+            "title": "Use Case 5: Logistic Regression Guide",
+            "domain": "Analytics",
+            "problem": "Teams need a clear, visual introduction to logistic regression and how to apply it to practical decisions.",
+            "ml_type": "Supervised Learning - Logistic Regression",
+            "input": "User behavior data and business outcome labels",
+            "output": "Probability-based decision guidance and binary prediction",
+            "relevance": "Helps stakeholders understand where logistic regression adds value and how to execute it step by step.",
+            "implementation": "Presented as a new guide module with a JPG-ready summary image"
         }
     }
     
@@ -268,6 +284,10 @@ def log_predict():
                              result=None)
 
 
+@app.route("/logistic-regression/guide")
+def log_guide():
+    """Display a textual logistic regression guide (no generated image)."""
+    return render_template("logistic_regression_guide.html")
 
 
 @app.route("/logistic-regression/metrics")
